@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:28:26 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/13 18:50:16 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:02:50 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@
 # include "Contact.hpp"
 # include <iostream>
 
-Class Phonebook {
+class Phonebook {
 
 public:
 	Phonebook (void);
 	~Phonebook (void);
 
 private:
-	Contact _contacts[8];
+	Contact _contacts[8] =
+	{
+		Contact(), Contact(),
+		Contact(), Contact(),
+		Contact(), Contact(),
+		Contact(), Contact()
+	};
 
 };
 

@@ -1,7 +1,7 @@
 CPP = c++
 CPP_FLAGS = -Wall -Wextra -Werror
 NAME = phonebook
-CPP_FILES = phonebook.hpp phonebook.cpp contact.cpp contact.hpp
+CPP_FILES = Phonebook.hpp Phonebook.cpp Contact.cpp Contact.hpp
 
 all : $(NAME)
 
