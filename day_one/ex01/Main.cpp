@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:51:35 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/14 19:02:34 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:33:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 
 int main(void)
 {
+
 	Phonebook phonebook = Phonebook();
-	Contact contact = Contact("Agathe", "Filet", "fan2umi", "0781708344", "j'aime pas steins gate");
 
+	phonebook.addNewContact();
+	phonebook.displayContacts();
+	std::cout << "---" << std::endl;
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
+	phonebook.addNewContact();
 
-	return 0;
+	phonebook.displayContacts();
+
+	return (0);
 }
