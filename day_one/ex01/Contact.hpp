@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:53:03 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/16 17:29:55 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:58:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ public:
 								std::string nname, std::string number, std::string secret);
 	void		copy			(Contact &contact);
 	void		resetContact	(void);
+	bool		empty			(void) const;
 	void		displayInfo		(void) const;
 
 private:

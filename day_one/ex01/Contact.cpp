@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:11:12 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/16 18:31:57 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:23:42 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ std::string	Contact::getSecret(void) const {
 
 bool	Contact::setLname(std::string lname) {
 
-	if (Contact::checkName(lname))
+	if (!lname.empty() && Contact::checkName(lname))
 	{
 		this->_lname = lname;
 	}
@@ -155,6 +155,12 @@ void	Contact::copy(Contact &contact){
 	this->_number = contact._number;
 	this->_secret = contact._secret;
 }
+
+bool	Contact::empty(void) const {
+
+	return (this->_fname.empty());
+}
+
 void	Contact::displayInfo(void) const {
 
 	
