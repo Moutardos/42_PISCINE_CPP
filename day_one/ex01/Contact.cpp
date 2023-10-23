@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:11:12 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/23 13:33:33 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:38:33 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,8 @@ bool	Contact::empty(void) const {
 void	Contact::displayInfo(void) const {
 
 	
-	std::cout << "Coucou je suis " << this->_fname << " " << this->_lname;
-	std::cout << " mon pseudonyme est " << this->_nname << "!\nMon numéro de tel : " << this->_number;
-	std::cout << ". Et \"" << this->_secret << "\" mais ne le dis à personne hein!" << std::endl;
+	// std::cout << "Coucou je suis " << this->_fname << " " << this->_lname;
+	// std::cout << " mon pseudonyme est " << this->_nname << "!\nMon numéro de tel : " << this->_number;
+	// std::cout << ". Et \"" << this->_secret << "\" mais ne le dis à personne hein!" << std::endl;
 	return ;
 }

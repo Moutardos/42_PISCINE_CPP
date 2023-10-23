@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:52:50 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/20 20:33:11 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:21:21 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Phonebook::Phonebook(void) { 
 
 	this->_size = 0;
+
 	return;
 }
 
@@ -27,14 +28,14 @@ void	Phonebook::start(void) {
 	while (!end)
 	{
 		std::cout << "ADD | SEARCH | EXIT" << std::endl;
-		this->prompt();
-		if (!this->_input.compare("ADD"))
+		if (!this->prompt())
+			end = true;
+		else if (!this->_input.compare("ADD"))
 			this->promptContact();
 		else if (!this->_input.compare("SEARCH"))
 			this->promptSearch();
 		else if (!this->_input.compare("EXIT"))
 			end = true;
-		this->resetInput();
 	}
 	return;
 }
@@ -43,32 +44,38 @@ bool	Phonebook::promptContact(void) {
 
 	Contact	new_contact;
 
+	std::cout << std::endl;
 	do
 	{
 		std::cout << "First name: ";
-		this->prompt();
+		if (!this->prompt())
+			return (false);
 	} while (!new_contact.setFname(this->_input));
 	do
 	{
 		std::cout << "Last name: ";
-		this->prompt();
+		if (!this->prompt())
+			return (false);
 	} while (!new_contact.setLname(this->_input));
 	do
 	{
 		std::cout << "Nickname: ";
-		this->prompt();
+		if (!this->prompt())
+			return (false);
 	} while (!new_contact.setNname(this->_input));
 	do
 	{
 		std::cout << "Phone number: ";
-		this->prompt();
+		if (!this->prompt())
+			return (false);
 	} while (!new_contact.setNumber(this->_input));
 	do
 	{
 		std::cout << "Secret: ";
-		this->prompt();
+		if (!this->prompt())
+			return (false);
 	} while (!new_contact.setSecret(this->_input));
-	this->resetInput();
+	std::cout << std::endl;
 	return (this->addNewContact(new_contact));
 }
 
@@ -104,14 +111,31 @@ bool	Phonebook::addNewContact(Contact contact) {
 	}
 	return (true);
 }
-void	Phonebook::resetInput (void) {
-
-	this->_input = "";
-}
 void	Phonebook::displayContacts(void) const{
 
-	for (int i = 0; i < this->_size; i++)
+	Contact current;
+
+	std::cout << "|";
+	Phonebook::displayColumn("Index");
+	Phonebook::displayColumn("First name", true);
+	Phonebook::displayColumn("Last name");
+	Phonebook::displayColumn("Nickname");
+	std::cout << std::endl;
+	for (unsigned int i = 0; i < this->_size; i++)
 	{
-		this->_contacts[i].displayInfo();
+		current = this->_contacts[i];
+		std::cout << "|";
+		Phonebook::displayColumn(std::to_string(i));
+		Phonebook::displayColumn(current.getFname());
+		Phonebook::displayColumn(current.getLname());
+		Phonebook::displayColumn(current.getNname());
+		std::cout << std::endl;
 	}
+}
+
+void	Phonebook::displayColumn(std::string text, bool legend) {
+
+	std::cout << std::setw(10) << text;
+	legend = true;
+	std::cout << "|";
 }
