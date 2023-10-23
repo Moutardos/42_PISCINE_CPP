@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:52:50 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/17 19:30:16 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:33:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ void	Phonebook::start(void) {
 	{
 		std::cout << "ADD | SEARCH | EXIT" << std::endl;
 		this->prompt();
-		std::cout << "read : " << this->_input << std::endl;
 		if (!this->_input.compare("ADD"))
 			this->promptContact();
 		else if (!this->_input.compare("SEARCH"))
 			this->promptSearch();
 		else if (!this->_input.compare("EXIT"))
 			end = true;
-		this->_input = "";
+		this->resetInput();
 	}
 	return;
 }
@@ -44,24 +43,47 @@ bool	Phonebook::promptContact(void) {
 
 	Contact	new_contact;
 
-	this->_input = "";
+	do
+	{
+		std::cout << "First name: ";
+		this->prompt();
+	} while (!new_contact.setFname(this->_input));
 	do
 	{
 		std::cout << "Last name: ";
 		this->prompt();
 	} while (!new_contact.setLname(this->_input));
-	return (true);
+	do
+	{
+		std::cout << "Nickname: ";
+		this->prompt();
+	} while (!new_contact.setNname(this->_input));
+	do
+	{
+		std::cout << "Phone number: ";
+		this->prompt();
+	} while (!new_contact.setNumber(this->_input));
+	do
+	{
+		std::cout << "Secret: ";
+		this->prompt();
+	} while (!new_contact.setSecret(this->_input));
+	this->resetInput();
+	return (this->addNewContact(new_contact));
 }
 
 bool	Phonebook::promptSearch(void) {
 
-	std::cout << "sese\n";
+	this->displayContacts();
 	return (true);
 }
 
-void	Phonebook::prompt(void) {
+bool	Phonebook::prompt(void) {
 
-	std::cin >> this->_input;
+	if (!std::cin)
+		return (false);
+	std::getline(std::cin, this->_input);
+	return (true);
 }
 bool	Phonebook::addNewContact(Contact contact) {
 
@@ -82,7 +104,10 @@ bool	Phonebook::addNewContact(Contact contact) {
 	}
 	return (true);
 }
+void	Phonebook::resetInput (void) {
 
+	this->_input = "";
+}
 void	Phonebook::displayContacts(void) const{
 
 	for (int i = 0; i < this->_size; i++)

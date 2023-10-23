@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:28:26 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/17 19:19:32 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:14:28 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ private:
 	bool	addNewContact	(Contact contact);
 	bool	promptContact	(void);
 	bool	promptSearch	(void);
-	void	prompt			(void);
+	bool	prompt			(void);
+	void	resetInput		(void);
 };
 
 # endif

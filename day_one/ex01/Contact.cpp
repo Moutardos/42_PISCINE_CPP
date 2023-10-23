@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:11:12 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/17 19:23:42 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/23 13:33:33 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,8 @@ bool	Contact::setSecret(std::string secret) {
 bool	Contact::checkNumber(std::string number) {
 	
 	for (std::string::iterator it = number.begin(); it != number.end(); it++)
-	{
 		if (!::isdigit(*it))
 			return (false);
-	}
 	return (true);
 }
 
@@ -121,7 +119,7 @@ bool	Contact::checkName(std::string name) {
 	
 	for (std::string::iterator it = name.begin(); it != name.end(); it++)
 	{
-		if (!::isascii(*it))
+		if (!::isalpha(*it))
 			return (false);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:53:03 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/17 17:58:46 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:43:01 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ public:
 	bool		setNname		(std::string nname);
 	bool		setNumber		(std::string number);
 	bool		setSecret		(std::string secret);
-	static bool	checkNumber		(std::string number);
-	static bool	checkName		(std::string name);
 
 	bool		initialize		(std::string fname, std::string lname, 
 								std::string nname, std::string number, std::string secret);
@@ -40,6 +38,9 @@ public:
 	void		resetContact	(void);
 	bool		empty			(void) const;
 	void		displayInfo		(void) const;
+
+	static bool	checkNumber		(std::string number);
+	static bool	checkName		(std::string name);
 
 private:
 	std::string	_fname;
