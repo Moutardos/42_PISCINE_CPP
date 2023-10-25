@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:52:50 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/23 16:21:21 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:41:59 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void	Phonebook::displayContacts(void) const{
 
 void	Phonebook::displayColumn(std::string text, bool legend) {
 
+	if (text.length() >= 10 && !legend)
+		text.replace(9, text.length(), ".");
 	std::cout << std::setw(10) << text;
-	legend = true;
 	std::cout << "|";
 }
