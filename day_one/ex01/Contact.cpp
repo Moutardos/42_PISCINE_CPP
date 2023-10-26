@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:11:12 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/25 14:25:44 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:52:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Contact::Contact(void) : _fname(""), _lname(""), _nname(""), _number(""), _secre
 
 Contact::~Contact(void) {}
 
-std::string	Contact::getFname(void) const {
+std::string	Contact::getFname(void) const{
 
 	return (this->_fname);
 }
@@ -40,9 +40,7 @@ std::string	Contact::getSecret(void) const {
 bool	Contact::setLname(std::string lname) {
 
 	if (!lname.empty() && Contact::checkName(lname))
-	{
 		this->_lname = lname;
-	}
 	else
 	{
 		std::cout << "This isn't a valid last name" << std::endl;
@@ -55,9 +53,7 @@ bool	Contact::setLname(std::string lname) {
 bool	Contact::setFname(std::string fname) {
 
 	if (!fname.empty() && Contact::checkName(fname))
-	{
 		this->_fname = fname;
-	}
 	else
 	{
 		std::cout << "This isn't a valid first name" << std::endl;
@@ -69,9 +65,7 @@ bool	Contact::setFname(std::string fname) {
 bool	Contact::setNname(std::string nname) {
 
 	if (!nname.empty() && Contact::checkName(nname))
-	{
 		this->_nname = nname;
-	}
 	else
 	{
 		std::cout << "This isn't a valid nickname" << std::endl;
@@ -83,9 +77,7 @@ bool	Contact::setNname(std::string nname) {
 bool	Contact::setNumber(std::string number) {
 
 	if (!number.empty() && Contact::checkNumber(number))
-	{
 		this->_number = number;
-	}
 	else
 	{
 		std::cout << "This isn't a valid phone number" << std::endl;
@@ -118,20 +110,8 @@ bool	Contact::checkNumber(std::string number) {
 bool	Contact::checkName(std::string name) {
 	
 	for (std::string::iterator it = name.begin(); it != name.end(); it++)
-	{
 		if (!::isalpha(*it))
 			return (false);
-	}
-	return (true);
-}
-
-bool	Contact::initialize(std::string fname, std::string lname, std::string nname, std::string number, std::string secret) {
-
-	if (!(this->setFname(fname) && this->setLname(lname) && this->setNname(nname) && this->setNumber(number) && this->setSecret(secret)))
-	{
-		this->resetContact();
-		return (false);
-	}
 	return (true);
 }
 
@@ -156,14 +136,17 @@ void	Contact::copy(Contact &contact){
 
 bool	Contact::empty(void) const {
 
-	return (this->_fname.empty());
+	return (this->_fname.empty() || this->_lname.empty() || 
+			this->_nname.empty() || this->_number.empty() || this->_secret.empty());
 }
 
 void	Contact::displayInfo(void) const {
 
-	
-	std::cout << "Coucou je suis " << this->_fname << " " << this->_lname;
-	std::cout << " mon pseudonyme est " << this->_nname << "!\nMon numéro de tel : " << this->_number;
-	std::cout << ". Et \"" << this->_secret << "\" mais ne le dis à personne hein!" << std::endl;
+	if (!this->empty())
+	{
+		std::cout << "Coucou je suis " << this->_fname << std::endl << "Nom de famille: " << this->_lname;
+		std::cout << "\nmon pseudonyme est " << this->_nname << "!\nMon numéro de tel : " << this->_number;
+		std::cout << "\nEt \"" << this->_secret << "\" mais ne le dis à personne hein!" << std::endl;
+	}
 	return ;
 }

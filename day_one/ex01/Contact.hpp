@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:53:03 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/20 20:43:01 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:45:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ public:
 	bool		setNumber		(std::string number);
 	bool		setSecret		(std::string secret);
 
-	bool		initialize		(std::string fname, std::string lname, 
-								std::string nname, std::string number, std::string secret);
 	void		copy			(Contact &contact);
 	void		resetContact	(void);
 	bool		empty			(void) const;

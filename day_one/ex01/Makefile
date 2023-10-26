@@ -1,10 +1,19 @@
 CPP = c++
+ODIR = obj
 CONTACT_MAX = 8
 CPP_FLAGS = -Wall -Wextra -Werror
 NAME = phonebook
-CPP_FILES = Phonebook.hpp Phonebook.cpp Contact.cpp Contact.hpp Main.cpp
+FILES =  Phonebook Contact
+OBJS = $(patsubst %,%,$(CPP_FILES:=.o))
+CPP_FILES = Phonebook Contact Main
 
 all : $(NAME)
 
-$(NAME):
-	$(CPP)  $(CPP_FILES) $(CPP_FLAGS) -DCONTACT_MAX=$(CONTACT_MAX)
+$(ODIR):
+	mkdir -p $(ODIR)
+
+$(NAME): $(OBJS)
+	$(CPP) $(CPP_FLAGS)  -o  $@ $(OBJS)
+
+%.o : %.cpp | $(ODIR)
+	$(CPP) $(CPP_FLAGS) -c $<

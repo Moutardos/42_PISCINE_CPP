@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:52:50 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/25 14:41:59 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:33:07 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Phonebook::Phonebook(void) { 
 
 	this->_size = 0;
-
+	this->_currId = 0;
 	return;
 }
 
@@ -81,7 +81,21 @@ bool	Phonebook::promptContact(void) {
 
 bool	Phonebook::promptSearch(void) {
 
+	unsigned int	id;
+
 	this->displayContacts();
+	if (this->_size > 0)
+	{
+		std::cout << "\nID: ";
+		if (!this->prompt())
+			return (false);
+		if (Contact::checkNumber(this->_input))
+		{
+			std::stringstream(this->_input) >> id;
+			if (id >= 0 && id < this->_size)
+				this->_contacts[id].displayInfo();
+		}
+	}
 	return (true);
 }
 
@@ -90,31 +104,28 @@ bool	Phonebook::prompt(void) {
 	if (!std::cin)
 		return (false);
 	std::getline(std::cin, this->_input);
+	if (!std::cin)
+		return (false);
 	return (true);
 }
+
 bool	Phonebook::addNewContact(Contact contact) {
 
 	if (contact.empty())
 		return (false);
+	if (this->_currId >= CONTACT_MAX)
+		this->_currId = 0;
 	if (this->_size < CONTACT_MAX)
-	{
-		this->_contacts[this->_size].copy(contact);
 		this->_size++;
-	}
-	else
-	{
-		for (int i = 0; i < CONTACT_MAX - 1; i++)
-		{
-			this->_contacts[i].copy(this->_contacts[i + 1]);
-		}
-		this->_contacts[CONTACT_MAX - 1].copy(contact);
-	}
+	this->_contacts[this->_currId].copy(contact);
+	this->_currId++;
 	return (true);
 }
-void	Phonebook::displayContacts(void) const{
 
-	Contact current;
+void	Phonebook::displayContacts(void) {
 
+	Contact 		current;
+	// unsigned int	index; 
 	std::cout << "|";
 	Phonebook::displayColumn("Index");
 	Phonebook::displayColumn("First name", true);
