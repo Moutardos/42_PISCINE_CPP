@@ -1,21 +1,23 @@
 CPP = c++
 ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror
-NAME = megaphone
+NAME = account_test
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
-CPP_FILES = Megaphone
+CPP_FILES = tests Account
 
 all : $(NAME)
 
 $(ODIR):
 	mkdir -p $(ODIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	$(CPP) $(CPP_FLAGS)  -o  $@ $(OBJS)
 
-$(ODIR)/%.o : %.cpp | $(ODIR)
-	$(CPP) $(CPP_FLAGS) -c -o $@ $< 
+obj/tests.o: tests.cpp | $(ODIR)
+	$(CPP) -c -o $@ $<
 
+obj/Account.o: Account.cpp | $(ODIR)
+	$(CPP) $(CPP_FLAGS) -c -o $@ $<
 clean:
 	rm -Rf $(ODIR)
 
