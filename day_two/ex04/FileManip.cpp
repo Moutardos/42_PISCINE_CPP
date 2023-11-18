@@ -44,7 +44,8 @@ bool	FileManip::replace (std::string str1, std::string str2) {
 		pos = newText.find(str1, pos);
 		if (pos != std::string::npos)
 		{
-			newText.replace(pos, str1.length(), str2);
+			newText.erase(pos, str1.length());
+			newText.insert(pos, str2);
 			pos += str2.length();
 		}
 	} while (pos != std::string::npos && pos < newText.length());

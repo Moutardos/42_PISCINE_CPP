@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:09:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/11/09 15:35:56 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/11/18 13:03:21 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int main(void)
 {
 	std::string	string = "HI THIS IS BRAIN";
-	std::string string2 = "no";
 	std::string	*stringPTR = &string;
 	std::string	&stringREF = string;
 

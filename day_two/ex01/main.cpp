@@ -1,13 +1,13 @@
 #include "Zombie.hpp"
 
-int main(int argc, char const *argv[])
+int main(void)
 {
-	(void) argc;
-	(void) argv;
-	Zombie zombie = Zombie("hector2");
+	Zombie *horde =  zombieHorde(15, "ouais");
 
-	Zombie *horde =  zombieHorde(100, "ouais");
-	horde->announce();
+	for (int i = 0; i < 15; i++)
+	{
+		horde[i].announce();
+	}
 	delete [] horde;
 	return 0;
 }

@@ -6,7 +6,8 @@ int main(int argc, char const *argv[])
 	(void) argv;
 	Zombie *zombie = newZombie("oue");
 
-	randomChump("test1");
+	zombie->announce();
 	delete zombie;
+	randomChump("test1");
 	return 0;
 }

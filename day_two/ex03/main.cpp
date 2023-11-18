@@ -10,7 +10,7 @@ int main(void)
 		bob.attack();
 	}
 	{
-		Weapon club = Weapon("");
+		Weapon club = Weapon("crude spiked club");
 		HumanB jim("Jim");
 		jim.attack();
 		jim.setWeapon(club);
