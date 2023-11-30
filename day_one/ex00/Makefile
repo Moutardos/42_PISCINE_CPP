@@ -16,7 +16,7 @@ $(NAME): $(OBJS)
 $(ODIR)/%.o : %.cpp | $(ODIR)
 	$(CPP) $(CPP_FLAGS) -c -o $@ $< 
 
-clean:
+clean:d
 	rm -Rf $(ODIR)
 
 fclean: clean

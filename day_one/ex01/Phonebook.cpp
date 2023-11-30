@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:52:50 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/26 15:33:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:57:00 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ bool	Phonebook::addNewContact(Contact contact) {
 void	Phonebook::displayContacts(void) {
 
 	Contact 		current;
-	// unsigned int	index; 
+
 	std::cout << "|";
 	Phonebook::displayColumn("Index");
 	Phonebook::displayColumn("First name", true);

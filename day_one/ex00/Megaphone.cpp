@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Megaphone.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:10:48 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/10/12 16:52:32 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:53:31 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 class Megaphone {
 
 public:
-	Megaphone(char **say, int size);
+	Megaphone(char **sentence, int size);
 	~Megaphone(void);
 	void use(void) const;
 
@@ -24,16 +24,18 @@ private:
 	int		_size;
 };
 
-Megaphone::Megaphone(char **say, int size) : _sentences(say), _size(size) {	return ; }
+Megaphone::Megaphone(char **sentences, int size) : _sentences(sentences), _size(size) {	return ; }
 
 Megaphone::~Megaphone(void) { return ; }
 
 void Megaphone::use(void) const{
 
-	if (this->_size == 0)
+	if (this->_size <= 0)
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
-	else {
-		for (int i = 0; i < this->_size ; i++) {
+	else 
+	{
+		for (int i = 0; i < this->_size ; i++) 
+		{
 			if (i > 0)
 				std::cout << " ";
 			std::string str = this->_sentences[i];
