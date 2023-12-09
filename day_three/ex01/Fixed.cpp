@@ -6,11 +6,12 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:25:55 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/12/08 12:58:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:49:53 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
+#include <cmath>
 
 Fixed::Fixed (void) {
 
@@ -44,8 +45,14 @@ Fixed::Fixed (int number) {
 // 
 Fixed::Fixed (float number) {
 
-	float	shiftNumber = number * std::pow(2, this->_fixedPt);
-	this->_number = static_cast<int> (round(shiftNumber));
+	float	shiftNumber = number * Fixed::bitsToShift();
+	int		numberShifted = static_cast<int> (roundf(shiftNumber));
+	if (numberShifted < 0)
+	{
+		numberShifted *= -1;
+		numberShifted = ~ numberShifted;
+	}
+	this->_number = numberShifted;
 }
 
 
@@ -53,6 +60,11 @@ int		Fixed::getRawBits (void) const {
 
 	std::cout << "getRawBits member function called" << std::endl;
 	return (this->_number);
+}
+
+int		Fixed::getFixedPt (void) {
+
+	return (_fixedPt);
 }
 
 void	Fixed::setRawBits (int const raw) {
@@ -68,7 +80,17 @@ int	Fixed::toInt (void) const {
 
 float	Fixed::toFloat (void) const {
 
-	return (static_cast<float> (this->_number) / static_cast<float> (std::pow(2, this->_fixedPt)));
+	return (static_cast<float> (this->_number) / static_cast<float> (Fixed::bitsToShift()));
+}
+
+int	Fixed::bitsToShift (void) {
+
+	int 		res = 1;
+	int const	FixedPt = Fixed::getFixedPt();
+
+	for (int i = 0; i < FixedPt; i++)
+		res *= 2;
+	return (res);
 }
 
 std::ostream	&operator<<(std::ostream &os, const Fixed &fixedNb)

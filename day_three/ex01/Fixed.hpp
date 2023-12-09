@@ -19,6 +19,9 @@ public:
 	int		getRawBits	(void) const;
 	void	setRawBits	(int const raw);
 
+	static int	getFixedPt	(void);
+	static int	bitsToShift	(void);
+
 private:
 	static const int	_fixedPt = 8;
 

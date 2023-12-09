@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:12:08 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/12/08 12:58:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:51:03 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(void) {
 
 Fixed a;
-Fixed const b( 10 );
+Fixed const b( -0.91f );
 Fixed const c( 42.42f );
 Fixed const d( b );
 a = Fixed( 1234.4321f );
