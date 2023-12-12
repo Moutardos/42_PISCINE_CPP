@@ -15,7 +15,7 @@ public:
 	void	setRawBits (int const raw);
 
 private:
-	static const int	_nbBits = 8;
+	static const int	_fixedPt = 8;
 
 	int _number;
 

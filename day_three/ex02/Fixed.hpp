@@ -13,17 +13,20 @@ public:
 	Fixed (int number);
 	Fixed (float number);
 
-	int		toInt		(void) const;
-	float	toFloat		(void) const;
-	int		getRawBits	(void) const;
-	void	setRawBits	(int const raw);
-	bool	isEqual		(Fixed &other) const;
+	int			toInt		(void) const;
+	float		toFloat		(void) const;
+	int			getRawBits	(void) const;
+	void		setRawBits	(int const raw);
 
-	Fixed&	Fixed::operator++	();
-	Fixed&	Fixed::operator--	();	
-	Fixed 	Fixed::operator++	(int);	
-	Fixed	Fixed::operator--	(int);	
-	Fixed	&operator=			(const Fixed &number);
+	Fixed&		Fixed::operator++	();
+	Fixed&		Fixed::operator--	();	
+	Fixed 		Fixed::operator++	(int);	
+	Fixed		Fixed::operator--	(int);	
+	Fixed		Fixed::&operator=			(const Fixed &number);
+	Fixed		Fixed::&min				(Fixed &f1, Fixed& f2);
+	Fixed		Fixed::&min				(const Fixed &f1, const Fixed& f2);
+	const Fixed	Fixed::&max				(Fixed &f1, Fixed& f2);
+	const Fixed	Fixed::&max				(const Fixed &f1, const Fixed& f2);
 
 	static int	getFixedPt	(void);
 	static int	bitsToShift	(void);

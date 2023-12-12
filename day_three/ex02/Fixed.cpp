@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:25:55 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/12/09 19:40:56 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:28:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,56 @@ Fixed operator*(const Fixed &f1, const Fixed &f2){
 	return (res);
 }
 
-Fixed&	Fixed::operator++	(){
-	this->_ra
+Fixed	&Fixed::operator++	() {
+
+	this->_number += 1;
+	return (*this);
 }
-Fixed&	Fixed::operator--	();	
-Fixed 	Fixed::operator++	(int);	
-Fixed	Fixed::operator--	(int);	
+Fixed	&Fixed::operator--	() {
+
+	this->_number -= 1;
+	return (*this);
+}
+Fixed	Fixed::operator++	(int ){
+
+	Fixed	old = *this;
+
+	this->_number += 1;
+	return (old);
+}
+
+Fixed	Fixed::operator--	(int) {
+
+	Fixed	old = *this;
+
+	this->_number -= 1;
+	return (old);
+}
+
+Fixed	&Fixed::min(Fixed &f1, Fixed& f2) {
+
+	if (f1 < f2)
+		return (f1);
+	return (f2);
+}
+
+Fixed	&Fixed::max(Fixed &f1, Fixed& f2) {
+
+	if (f1 > f2)
+		return (f1);
+	return (f2);
+}
+
+const Fixed	&Fixed::min(const Fixed &f1, const Fixed& f2) {
+
+	if (f1 < f2)
+		return (f1);
+	return (f2);
+}
+
+const Fixed	&Fixed::max(const Fixed &f1, const Fixed& f2) {
+
+	if (f1 > f2)
+		return (f1);
+	return (f2);
+}
