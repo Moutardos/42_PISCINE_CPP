@@ -1,9 +1,7 @@
 #include "Zombie.hpp"
 
-int main(int argc, char const *argv[])
+int main(void)
 {
-	(void) argc;
-	(void) argv;
 	Zombie *zombie = newZombie("oue");
 
 	if (!zombie)

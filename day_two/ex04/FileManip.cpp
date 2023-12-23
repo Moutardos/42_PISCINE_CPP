@@ -2,7 +2,7 @@
 
 FileManip::FileManip (std::string fname) : _fname(fname) {
 
-	this->_file.open(this->_fname);
+	this->_file.open(this->_fname.c_str());
 }
 
 FileManip::FileManip (void) {}
@@ -14,7 +14,7 @@ FileManip::~FileManip (void) {
 
 void	FileManip::open (std::string fname) {
 
-	this->_file.open(fname);
+	this->_file.open(fname.c_str());
 	this->_fname = fname;
 }
 
@@ -30,7 +30,7 @@ bool	FileManip::replace (std::string str1, std::string str2) {
 	std::string		line;
 	size_t			pos = 0;
 
-	fileReplace.open(this->_fname + ".replace");
+	fileReplace.open((this->_fname + ".replace").c_str());
 	if (!this->is_open() || !fileReplace.is_open())
 		return (false);
 	while (std::getline(this->_file, line))
@@ -39,16 +39,19 @@ bool	FileManip::replace (std::string str1, std::string str2) {
 		newText += '\n';
 	}
 	newText.substr(0, newText.length() - 1);
-	do
+	if (str1 != "")
 	{
-		pos = newText.find(str1, pos);
-		if (pos != std::string::npos)
+		do
 		{
-			newText.erase(pos, str1.length());
-			newText.insert(pos, str2);
-			pos += str2.length();
-		}
-	} while (pos != std::string::npos && pos < newText.length());
+			pos = newText.find(str1, pos);
+			if (pos != std::string::npos)
+			{
+				newText.erase(pos, str1.length());
+				newText.insert(pos, str2);
+				pos += str2.length();
+			}
+		} while (pos != std::string::npos && pos < newText.length());
+	}
 	fileReplace << newText;
 	fileReplace.close();
 	return (true);

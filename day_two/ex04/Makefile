@@ -1,7 +1,7 @@
 CPP = c++
 ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = harl
+NAME = notsed
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
 CPP_FILES = main FileManip
 

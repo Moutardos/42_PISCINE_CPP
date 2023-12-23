@@ -1,7 +1,7 @@
 CPP = c++
 ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror
-NAME = HarlFilter
+NAME = harlFilter
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
 CPP_FILES = main Harl
 
