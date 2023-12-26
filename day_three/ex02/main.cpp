@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:12:08 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/12/09 19:35:10 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/12/26 10:27:26 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ int	main(void) {
 		std::cout << std::endl;
 	}
 	Fixed a;
-	Fixed const b( Fixed( 5.05f ) / Fixed( 0 ) );
-	// std::cout << a << std::endl;
-	// std::cout << ++a << std::endl;
-	// std::cout << a << std::endl;
-	// std::cout << a++ << std::endl;
+	Fixed const b(  Fixed( 5.05f ) * Fixed( 2 ) );
+	std::cout << a << std::endl;
+	std::cout << ++a << std::endl;
+	std::cout << a << std::endl;
+	std::cout << a++ << std::endl;
 	std::cout << a << std::endl;
 	std::cout << b << std::endl;
-	// std::cout << Fixed::max( a, b ) << std::endl;
+	std::cout << "max :" <<  std::endl;
+	std::cout << Fixed::max( a, b ) << std::endl;
 	return 0;
 }
