@@ -8,7 +8,7 @@ int main(int argc, char const *argv[])
 {
 	(void) argc;
 	(void) argv;
-	Animal *fab = new Animal();
+	//Animal *fab = new Animal();
 	Animal *paf = new Dog();
 	Animal	*gab = new Cat();
 
