@@ -8,32 +8,32 @@ int main(int argc, char const *argv[])
 {
 	(void) argc;
 	(void) argv;
-	// Animal *fab = new Animal();
-	// Animal *paf = new Dog();
-	// Animal	*gab = new Cat();
+	Animal *fab = new Animal();
+	Animal *paf = new Dog();
+	Animal	*gab = new Cat();
 
-	// std::cout << std::endl;
-	// std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
 
-	// std::cout << std::endl;
-	// std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
 
-	// std::cout << "Hi, i'm gab and I'm " << gab->getType() << std::endl;
-	// gab->makeSound();
+	std::cout << "Hi, i'm gab and I'm " << gab->getType() << std::endl;
+	gab->makeSound();
 	// std::cout << "Hi, i'm fab and I'm " << fab->getType() << std::endl;
 	// fab->makeSound();
-	// std::cout << "Hi, i'm paf and I'm " << paf->getType() << std::endl;
-	// paf->makeSound();
+	std::cout << "Hi, i'm paf and I'm " << paf->getType() << std::endl;
+	paf->makeSound();
 
-	// std::cout << std::endl;
-	// std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
 	
 	// delete fab;
-	// delete gab;
-	// delete paf;
+	delete gab;
+	delete paf;
 	
-	// std::cout << std::endl;
-	// std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
 
 	// WrongAnimal *baf = new WrongAnimal();
 	// WrongAnimal	*bag = new WrongCat();
@@ -64,16 +64,6 @@ int main(int argc, char const *argv[])
 	for (int i = 0; i < 100; ++i)
 		delete array[i];
 
-	std::cout << std::endl;
-	std::cout << std::endl;
-
-	const Animal* j = new Dog();
-	const Animal* i = new Cat();
-	delete j;
-	delete i;
-
-	std::cout << std::endl;
-	std::cout << std::endl;
 
     {
         Cat    cat;
