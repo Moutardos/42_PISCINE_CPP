@@ -3,8 +3,8 @@
 
 # include <iostream>
 
-# include "Form.hpp"
-class Form;
+# include "AAForm.hpp"
+class AForm;
 
 class Bureaucrat{
 
@@ -21,7 +21,7 @@ public:
 
 	void	increment	(void);
 	void	decrement	(void);
-	void	signForm	(Form &form);
+	void	signAForm	(AForm &AForm);
 
 	static void	checkGrade (int grade);
 

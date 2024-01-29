@@ -1,17 +1,18 @@
-#ifndef FORM_H
-# define FORM_H
+#ifndef AFORM_H
+# define AFORM_H
 
 # include <iostream>
 # include "Bureaucrat.hpp"
 class Bureaucrat;
-class Form {
+class AForm {
 
 public:
-	Form	(void);
-	Form	(Form &other);
-	Form	&operator= (Form &other);
-	~Form	(void);
-	Form	(std::string name, int sign, int gradeExec, int gradeSign);
+	AForm	(void);
+	AForm	(AForm &other);
+	AForm	&operator= (AForm &other);
+	virtual ~AForm	(void);
+
+	AForm	(std::string name, int sign, int gradeExec, int gradeSign);
 
 	std::string	getName(void) const;
 	bool		getSigned(void) const;
@@ -48,6 +49,6 @@ private:
 	const int			_reqGradeExec;
 };
 
-std::ostream	&operator<< (std::ostream &os, Form &f);
+std::ostream	&operator<< (std::ostream &os, AForm &f);
 
 #endif
