@@ -58,15 +58,15 @@ void	Bureaucrat::checkGrade (int grade) {
 		throw Bureaucrat::GradeTooLowException() ;
 }
 
-void Bureaucrat::signAAAAForm (AAAAForm &AAAAForm) {
+void Bureaucrat::signAForm (AForm &AForm) {
 
 	try 
 	{
-		AAAAForm.beSigned(*this);
-		std::cout << this->getName() << " signed " << AAAAForm.getName() << std::endl;
+		AForm.beSigned(*this);
+		std::cout << this->getName() << " signed " << AForm.getName() << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cout << this->getName() << " couldn't sign " << AAAAForm.getName() << " because " << e.what() << std::endl;
+		std::cout << this->getName() << " couldn't sign " << AForm.getName() << " because " << e.what() << std::endl;
 	}
 }

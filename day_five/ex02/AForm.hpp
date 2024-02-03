@@ -12,7 +12,7 @@ public:
 	AForm	&operator= (AForm &other);
 	virtual ~AForm	(void);
 
-	AForm	(std::string name, int sign, int gradeExec, int gradeSign);
+	AForm	(const std::string &name, int sign, int gradeExec, int gradeSign);
 
 	std::string	getName(void) const;
 	bool		getSigned(void) const;
@@ -42,11 +42,16 @@ public:
 	
 	};
 
+protected:
+	void	setTarget	(const std::string &target);
+	void	getTarget	(void) const;
+
 private:
 	const std::string	_name;
 	bool				_signed;
 	const int			_reqGradeSign;
 	const int			_reqGradeExec;
+	std::string			_target;
 };
 
 std::ostream	&operator<< (std::ostream &os, AForm &f);

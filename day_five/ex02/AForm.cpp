@@ -50,6 +50,16 @@ int AForm::getReqGradeE(void) const {
 	return (this->_reqGradeExec);
 }
 
+void getTarget (void) const {
+
+	return (this->_target);
+}
+
+void setTarget (const std::string &target) {
+
+	this->_target = target;
+}
+
 void AForm::checkGrade (int grade) {
 
 	if (grade < 1)

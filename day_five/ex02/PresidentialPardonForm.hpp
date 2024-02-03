@@ -12,10 +12,7 @@ public:
 
 	PresidentialPardonForm	(std::string target);
 
-	std::string	getTarget	(void) const;
-
 private:
-	const std::string	_target;
 
 };
 
