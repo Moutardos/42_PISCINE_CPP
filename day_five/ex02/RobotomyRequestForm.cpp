@@ -1,16 +1,23 @@
 #include "RobotomyRequestForm.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm (void) : AForm("RobotomyRequestForm", false, 5, 25),
-_target("Unnamed") {}
+RobotomyRequestForm::RobotomyRequestForm (void) : AForm("RobotomyRequestForm", false, 45, 72) {
 
-RobotomyRequestForm::RobotomyRequestForm	(RobotomyRequestForm &other) : AForm("RobotomyRequestForm", false, 5, 25),
-_target(other.getTarget()) {}
+	this->setTarget("Unkown");
+}
 
-RobotomyRequestForm	&operator= (RobotomyRequestForm &other)
+RobotomyRequestForm::RobotomyRequestForm (RobotomyRequestForm &other) : AForm("RobotomyRequestForm", false, 45, 72) {
+
+	this->setTarget(other.getTarget());
+}
+
+RobotomyRequestForm	&RobotomyRequestForm::operator= (RobotomyRequestForm &other)
 {
 	
-	this->_target = other.getTarget();
+	this->setTarget(other.getTarget());
 	return (*this);
 }
 
-RobotomyRequestForm	(std::string target);
+RobotomyRequestForm::RobotomyRequestForm (std::string target) : AForm("RobotomyRequestForm", false, 45, 72) {
+
+	this->setTarget(target);
+}

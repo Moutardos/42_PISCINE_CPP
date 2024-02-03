@@ -4,6 +4,8 @@
 # include <iostream>
 # include "Bureaucrat.hpp"
 class Bureaucrat;
+
+
 class AForm {
 
 public:
@@ -11,17 +13,18 @@ public:
 	AForm	(AForm &other);
 	AForm	&operator= (AForm &other);
 	virtual ~AForm	(void);
-
 	AForm	(const std::string &name, int sign, int gradeExec, int gradeSign);
 
-	std::string	getName(void) const;
-	bool		getSigned(void) const;
-	int			getReqGradeS(void) const;
-	int			getReqGradeE(void) const;
+	std::string	getName			(void) const;
+	bool		getSigned		(void) const;
+	int			getReqGradeS	(void) const;
+	int			getReqGradeE	(void) const;
+	void		beSigned		(Bureaucrat &bu);
+	void		execute			(Bureaucrat &bu);
 
-	void	beSigned	(Bureaucrat &bu);
+	virtual void	executeAction	(void) = 0;
 
-	static void	checkGrade (int grade);
+	static void	checkGrade	(int grade, int max = 1 , int min = 150);
 
 	class GradeTooHighException : public std::exception 
 	{
@@ -42,9 +45,10 @@ public:
 	
 	};
 
+
 protected:
-	void	setTarget	(const std::string &target);
-	void	getTarget	(void) const;
+	void		setTarget	(const std::string &target);
+	std::string	getTarget	(void) const;
 
 private:
 	const std::string	_name;

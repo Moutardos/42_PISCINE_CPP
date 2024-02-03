@@ -3,14 +3,16 @@
 
 #include "AForm.hpp"
 
-class RobotomyRequestForm {
+class RobotomyRequestForm : public AForm {
 
 public:
-	PresidentialPardonForm	(void);
-	PresidentialPardonForm	(PresidentialPardonForm &other);
-	PresidentialPardonForm	&operator= (PresidentialPardonForm &other);
+	RobotomyRequestForm	(void);
+	RobotomyRequestForm	(RobotomyRequestForm &other);
+	RobotomyRequestForm	&operator= (RobotomyRequestForm &other);
 
-	PresidentialPardonForm	(std::string target);
+	RobotomyRequestForm	(std::string target);
+
+	void executeAction	(void);
 
 private:
 

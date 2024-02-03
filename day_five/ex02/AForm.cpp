@@ -1,10 +1,8 @@
 #include "AForm.hpp"
 
-AForm::AForm (void) : _name("Unnamed AForm"), _signed(false), _reqGradeSign(150), _reqGradeExec(150) {}
+AForm::AForm (void) : _name("Unnamed AForm"), _signed(false), _reqGradeSign(150), _reqGradeExec(150), _target("Unkown") {}
 
-AForm::AForm (AForm &other) : _name(other.getName()), _signed(other.getSigned()), _reqGradeSign(other.getReqGradeS()), _reqGradeExec(other.getReqGradeE()){
-
-}
+AForm::AForm (AForm &other) : _name(other.getName()), _signed(other.getSigned()), _reqGradeSign(other.getReqGradeS()), _reqGradeExec(other.getReqGradeE()),  _target(other.getTarget()) {}
 
 AForm &AForm::operator= (AForm &other)
 {
@@ -15,19 +13,17 @@ AForm &AForm::operator= (AForm &other)
 
 AForm::~AForm (void) {}
 
-AForm::AForm (std::string name, int sign, int gradeExec, int gradeSign) : _name(name),  _signed(sign),
+AForm::AForm (const std::string &name, int sign, int gradeExec, int gradeSign) : _name(name),  _signed(sign),
 _reqGradeSign(gradeSign), _reqGradeExec(gradeExec) {
 
 	checkGrade(gradeExec);
 	checkGrade(gradeSign);
 }
 
-void	AForm::beSigned	(Bureaucrat &bu)
-{
-	if (bu.getGrade() <= this->getReqGradeS())
-		this->_signed = true;
-	else
-		throw AForm::GradeTooLowException();
+void	AForm::beSigned	(Bureaucrat &bu) {
+
+	AForm::checkGrade(bu.getGrade(), 1, this->getReqGradeS());
+	this->_signed = true;
 }
 
 std::string AForm::getName(void) const {
@@ -50,21 +46,28 @@ int AForm::getReqGradeE(void) const {
 	return (this->_reqGradeExec);
 }
 
-void getTarget (void) const {
+std::string AForm::getTarget (void) const {
 
 	return (this->_target);
 }
 
-void setTarget (const std::string &target) {
+void AForm::setTarget (const std::string &target) {
 
 	this->_target = target;
 }
 
-void AForm::checkGrade (int grade) {
+void AForm::execute (Bureaucrat &bu) {
 
-	if (grade < 1)
+	BcheckGrade(bu.getGrade(), 1, this->getReqGradeE());
+	this->executeAction();
+}
+
+
+void AForm::checkGrade (int grade, int max = 1 , int min = 150) {
+
+	if (grade < max)
 		throw AForm::GradeTooHighException() ;
-	if (grade > 150)
+	if (grade > min)
 		throw AForm::GradeTooLowException() ;
 }
 

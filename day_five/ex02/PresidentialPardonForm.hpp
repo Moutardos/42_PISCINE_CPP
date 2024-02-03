@@ -13,6 +13,8 @@ public:
 	PresidentialPardonForm	(std::string target);
 
 private:
+	void	foo(void);
+	void 	executeAction	(void);
 
 };
 

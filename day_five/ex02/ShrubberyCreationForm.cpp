@@ -1,17 +1,23 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm (void) : AForm("ShrubberyCreationForm", false, 5, 25),
-_target("Unnamed") {}
+ShrubberyCreationForm::ShrubberyCreationForm (void) : AForm("ShrubberyCreationForm", false, 137, 145){
 
-ShrubberyCreationForm::ShrubberyCreationForm	(ShrubberyCreationForm &other) : AForm("ShrubberyCreationForm", false, 5, 25),
-_target(other.getTarget()) {}
+	this->setTarget("Unkown");
+}
+
+ShrubberyCreationForm::ShrubberyCreationForm	(ShrubberyCreationForm &other) : AForm("ShrubberyCreationForm", false, 137, 145){
+
+	this->setTarget(other.getTarget());
+}
 
 ShrubberyCreationForm	&ShrubberyCreationForm::operator= (ShrubberyCreationForm &other)
 {
 	
-	this->_target = other.getTarget();
+	this->setTarget(other.getTarget());
 	return (*this);
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm	(std::string target) : AForm("ShrubberyCreationForm", false, 5, 25),
-_target(target) {}
+ShrubberyCreationForm::ShrubberyCreationForm (std::string target) : AForm("ShrubberyCreationForm", false, 137, 145){
+
+	this->setTarget(target);
+}

@@ -3,7 +3,7 @@
 
 #include "AForm.hpp"
 
-class ShrubberyCreationForm {
+class ShrubberyCreationForm : public AForm {
 
 public:
 	ShrubberyCreationForm	(void);
