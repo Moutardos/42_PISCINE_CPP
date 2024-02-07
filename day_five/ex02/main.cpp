@@ -6,46 +6,24 @@
 
 int main(void)
 {
-	Bureaucrat fred("fred", 115);
+	
+	Bureaucrat	fred("fred", 115);
+	Bureaucrat	ted("ted", 2);
+	Bureaucrat	stagiaire("stagiaire",150);
 
-	// Form	*formEmpty = new Form();
-	// Form	*formStrict = new Form("strict", false, 2, 10);
-	// Form	*formOkay = new Form("okay", false, 140, 134);
+	AForm	*presForm = new PresidentialPardonForm(ted.getName());
+	AForm	*robotForm = new RobotomyRequestForm(fred.getName());
+	AForm	*shrubForm = new ShrubberyCreationForm(stagiaire.getName());
 
-	// try 
-	// {
-	// 	formEmpty->beSigned(fred);
-	// }
-	// catch (std::exception e)
-	// {
-	// }
-	// fred.signForm(*formEmpty);
-	// try 
-	// {
-	// 	formStrict->beSigned(fred);
-	// }
-	// catch (std::exception e)
-	// {
-	// }
-	// fred.signForm(*formStrict);
-	// try 
-	// {
-	// 	formOkay->beSigned(fred);
-	// }
-	// catch (std::exception e)
-	// {
-	// }
-	// fred.signForm(*formOkay);
+	ted.signForm(*presForm);
+	ted.signForm(*robotForm);
+	ted.signForm(*shrubForm);
 
-	// std::cout << std::endl;
-	// std::cout << std::endl;
-
-	// std::cout << *formEmpty << std::endl;
-	// std::cout << *formStrict << std::endl;
-	// std::cout << *formOkay << std::endl;
-
-	// delete formEmpty;
-	// delete formStrict;
-	// delete formOkay;
+	std::cout << std::endl;
+	stagiaire.executeForm(*presForm);
+	std::cout << std::endl;
+	ted.executeForm(*presForm);
+	std::cout << std::endl;
+	ted.executeForm(*robotForm);
 	return 0;
 }

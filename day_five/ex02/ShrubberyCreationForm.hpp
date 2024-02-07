@@ -12,6 +12,8 @@ public:
 
 	ShrubberyCreationForm	(std::string target);
 
+	void executeAction	(void);
+
 private:
 
 };

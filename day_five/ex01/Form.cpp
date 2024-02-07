@@ -1,6 +1,6 @@
 #include "Form.hpp"
 
-Form::Form (void) : _name("Unnamed Form"), _signed(false), _reqGradeSign(150), _reqGradeExec(150) {}
+Form::Form (void) : _name("Unnamed"), _signed(false), _reqGradeSign(150), _reqGradeExec(150) {}
 
 Form::Form (Form &other) : _name(other.getName()), _signed(other.getSigned()), _reqGradeSign(other.getReqGradeS()), _reqGradeExec(other.getReqGradeE()){
 
@@ -24,10 +24,9 @@ _reqGradeSign(gradeSign), _reqGradeExec(gradeExec) {
 
 void	Form::beSigned	(Bureaucrat &bu)
 {
-	if (bu.getGrade() <= this->getReqGradeS())
-		this->_signed = true;
-	else
-		throw Form::GradeTooLowException();
+	
+	Form::checkGrade(bu.getGrade(), this->getReqGradeS());
+	this->_signed = true;	
 }
 
 std::string Form::getName(void) const {
@@ -50,11 +49,11 @@ int Form::getReqGradeE(void) const {
 	return (this->_reqGradeExec);
 }
 
-void Form::checkGrade (int grade) {
+void Form::checkGrade (int grade, int min, int max) {
 
-	if (grade < 1)
+	if (grade < max)
 		throw Form::GradeTooHighException() ;
-	if (grade > 150)
+	if (grade > min)
 		throw Form::GradeTooLowException() ;
 }
 

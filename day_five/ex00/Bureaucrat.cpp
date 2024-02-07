@@ -1,11 +1,5 @@
 #include "Bureaucrat.hpp"
 
-std::ostream &operator<< (std::ostream &os, Bureaucrat &bu)
-{
-	os<< bu.getName() << ", bureaucrat grade " << bu.getGrade() << std::endl;
-	return (os);
-}
-
 Bureaucrat::Bureaucrat (void) : _name("Unnamed"), _grade(150) {}
 
 Bureaucrat::Bureaucrat (Bureaucrat &other) : _name(other.getName()) {
@@ -56,4 +50,10 @@ void	Bureaucrat::checkGrade (int grade) {
 		throw Bureaucrat::GradeTooHighException() ;
 	if (grade > 150)
 		throw Bureaucrat::GradeTooLowException() ;
+}
+
+std::ostream &operator<< (std::ostream &os, Bureaucrat &bu)
+{
+	os<< bu.getName() << ", bureaucrat grade " << bu.getGrade() << std::endl;
+	return (os);
 }

@@ -22,7 +22,7 @@ _reqGradeSign(gradeSign), _reqGradeExec(gradeExec) {
 
 void	AForm::beSigned	(Bureaucrat &bu) {
 
-	AForm::checkGrade(bu.getGrade(), 1, this->getReqGradeS());
+	AForm::checkGrade(bu.getGrade(), this->getReqGradeS());
 	this->_signed = true;
 }
 
@@ -58,12 +58,11 @@ void AForm::setTarget (const std::string &target) {
 
 void AForm::execute (Bureaucrat &bu) {
 
-	BcheckGrade(bu.getGrade(), 1, this->getReqGradeE());
+	checkGrade(bu.getGrade(), this->getReqGradeE());
 	this->executeAction();
 }
 
-
-void AForm::checkGrade (int grade, int max = 1 , int min = 150) {
+void AForm::checkGrade (int grade, int min, int max) {
 
 	if (grade < max)
 		throw AForm::GradeTooHighException() ;

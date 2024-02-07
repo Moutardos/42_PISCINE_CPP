@@ -21,3 +21,8 @@ RobotomyRequestForm::RobotomyRequestForm (std::string target) : AForm("RobotomyR
 
 	this->setTarget(target);
 }
+
+void RobotomyRequestForm::executeAction	(void) {
+
+	std::cout << "it's me, rpbot" << std::endl;
+}

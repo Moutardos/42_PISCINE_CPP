@@ -21,8 +21,8 @@ public:
 
 	void	increment	(void);
 	void	decrement	(void);
-	void	signAForm	(AForm &AForm);
-
+	void	signForm	(AForm &form);
+	void	executeForm	(AForm &form);
 	static void	checkGrade (int grade);
 
 	class GradeTooHighException : public std::exception 

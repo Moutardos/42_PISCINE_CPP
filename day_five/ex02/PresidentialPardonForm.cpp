@@ -24,5 +24,5 @@ PresidentialPardonForm::PresidentialPardonForm (std::string target) : AForm("Pre
 
 void	PresidentialPardonForm::executeAction	(void) {
 
-	std::cout << "it's me, president" << std::endl;
+	std::cout << "Hello my dear " << this->getTarget() << ", this is barack, you're pardoned" << std::endl;
 }

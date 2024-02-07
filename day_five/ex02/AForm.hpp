@@ -24,7 +24,7 @@ public:
 
 	virtual void	executeAction	(void) = 0;
 
-	static void	checkGrade	(int grade, int max = 1 , int min = 150);
+	static void	checkGrade	(int grade, int min = 150, int max = 1);
 
 	class GradeTooHighException : public std::exception 
 	{

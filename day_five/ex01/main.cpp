@@ -9,37 +9,17 @@ int main(void)
 	Form	*formStrict = new Form("strict", false, 2, 10);
 	Form	*formOkay = new Form("okay", false, 140, 134);
 
-	try 
-	{
-		formEmpty->beSigned(fred);
-	}
-	catch (std::exception e)
-	{
-	}
+	std::cout << fred << std::endl;
+
 	fred.signForm(*formEmpty);
-	try 
-	{
-		formStrict->beSigned(fred);
-	}
-	catch (std::exception e)
-	{
-	}
 	fred.signForm(*formStrict);
-	try 
-	{
-		formOkay->beSigned(fred);
-	}
-	catch (std::exception e)
-	{
-	}
 	fred.signForm(*formOkay);
 
 	std::cout << std::endl;
-	std::cout << std::endl;
 
-	std::cout << *formEmpty << std::endl;
-	std::cout << *formStrict << std::endl;
-	std::cout << *formOkay << std::endl;
+	std::cout << *formEmpty;
+	std::cout << *formStrict;
+	std::cout << *formOkay;
 
 	delete formEmpty;
 	delete formStrict;

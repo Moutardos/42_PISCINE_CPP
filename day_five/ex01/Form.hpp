@@ -20,7 +20,7 @@ public:
 
 	void	beSigned	(Bureaucrat &bu);
 
-	static void	checkGrade (int grade);
+	static void	checkGrade	(int grade, int min = 150 , int max = 1);
 
 	class GradeTooHighException : public std::exception 
 	{

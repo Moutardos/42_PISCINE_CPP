@@ -21,3 +21,8 @@ ShrubberyCreationForm::ShrubberyCreationForm (std::string target) : AForm("Shrub
 
 	this->setTarget(target);
 }
+
+void ShrubberyCreationForm::executeAction (void) {
+
+	std::cout << "it's me, shrub" << std::endl;
+}
