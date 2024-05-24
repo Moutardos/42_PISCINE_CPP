@@ -37,9 +37,7 @@ void	Converter::convertInt(std::string str, valueData &values) {
 	std::stringstream(str) >> values.value_int;
 	if (values.value_int <= std::numeric_limits<char>::max() && values.value_int >= std::numeric_limits<char>::min() && 
 			std::isprint(static_cast<char>(values.value_int)))
-	{
 		values.value_char = static_cast<char>(values.value_int);
-	}
 	else
 		values.valid_char = false;
 	values.value_float =  static_cast<float>(values.value_int);
@@ -77,13 +75,14 @@ bool	Converter::isFloat	(std::string str) {
 
 void	Converter::convertFloat(std::string str, valueData &values) {
 
+
 	values.value_float = strtof(str.c_str(), NULL);
 	if (values.value_float <= std::numeric_limits<char>::max() && values.value_float >= std::numeric_limits<char>::min() && 
 			std::isprint(static_cast<char>(values.value_float)))
 		values.value_char = static_cast<char>(values.value_float);
 	else
 		values.valid_char = false;
-	if (static_cast<int>(values.value_float) <= std::numeric_limits<int>::max() && static_cast<int>(values.value_float) < std::numeric_limits<int>::min())
+	if (values.value_float <= static_cast<float>(std::numeric_limits<int>::max()) && values.value_float >= static_cast<float>(std::numeric_limits<int>::min()))
 		values.value_int = static_cast<int>(values.value_float);
 	else
 		values.valid_int = false;
