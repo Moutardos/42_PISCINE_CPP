@@ -3,7 +3,7 @@ ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror
 NAME = whatever
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
-CPP_FILES = main
+CPP_FILES = main Span
 
 all : $(NAME)
 
