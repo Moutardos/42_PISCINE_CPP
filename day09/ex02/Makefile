@@ -3,7 +3,7 @@ ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror
 NAME = FordJohnson
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
-CPP_FILES = main PmergeMe
+CPP_FILES = main
 
 all : $(NAME)
 
