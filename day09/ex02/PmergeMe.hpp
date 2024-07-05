@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include <exception>
+# include <list>
+
+# define ListPair std::list<CPair<Type> *>
 
 //container a utiliser liste?
 
@@ -55,10 +58,13 @@ class CPair {
 		Type	&operator*(void)
 		{
 			CPair	*curr;
+
 			curr = this;
-			while (curr->_size > 1)
-				curr = static_cast<CPair<Type>*>(this->_left);
-			if (curr->_left == NULL)
+			while (curr && curr->_size > 1)
+			{
+				curr = (*curr)[0];
+			}
+			if ((*curr)[0] == NULL)
 				throw std::logic_error("Can't access to left member, it's NULL");
 			return (*static_cast<int*>(curr->_left));
 		}
@@ -77,10 +83,10 @@ class CPair {
 		}
 		void	sort(void)
 		{
-			if (!this->_right)
+			if (!this->_right || !this->_left)
 				return;
 			if (*static_cast<CPair<Type>*>(this->_right) < *static_cast<CPair<Type>*>(this->_left))
-				std::swap(_left, _right);
+				std::swap(this->_left, this->_right);
 		}
 
 		int		getSize(void) const {
@@ -110,6 +116,33 @@ class CPair {
 
 };
 
+//if the list is of size 1, return it. if not, pair the elements and
+template <typename Type>
+ListPair	mergeInsert(ListPair current)
+{
+	typename	ListPair::iterator	it;
+	typename	ListPair::iterator	leftover = 0;
+	typename	ListPair			nextList;
 
+
+	std::cout << current << std::endl;
+	// Creating the sorted pairs list
+	it = current.begin();
+	if (it == current.end())
+		return (*it);
+	for (; it != current.end(); it += 2)
+	{
+		if (it + 1 == current.end())
+		{
+			leftover = it;
+			break ;
+		}
+		CPair<Type>	*pair = new CPair<Type>(*it, *(it + 1));
+		pair->sort();
+		nextList.push_back(pair);
+	}
+	mergeInsert(nextList);
+	
+}
 
 #endif
