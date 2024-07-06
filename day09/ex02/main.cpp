@@ -32,8 +32,8 @@ int main(void)
 	CPair<int>	nodeEFGH(&nodeEF, &nodeGH);
 	CPair<int>	base(&nodeABCD, &nodeEFGH);
 
-	std::cout << "[30, 10, 20, 50, 40, 1, 89, 7]" << std::endl;
-	std::cout << "\n\n";
+	// std::cout << "[30, 10, 20, 50, 40, 1, 89, 7]" << std::endl;
+	// std::cout << "\n\n";
 	// std::cout << "[";
 	// CPair<int>::displayPair(nodeAB);
 	// std::cout << ", ";
@@ -84,7 +84,7 @@ int main(void)
 
 	std::list<CPair<int>* > test;
 
-
+	
 
 	test.push_back(&nodeA);
 	test.push_back(&nodeB);
@@ -95,5 +95,10 @@ int main(void)
 						test.push_back(&nodeG);
 							test.push_back(&nodeH);
 	mergeInsert(test);
+
+	std::cout << jacob(7) << std::endl;
+
+
+	
 	return 0;
 }

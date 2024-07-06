@@ -4,8 +4,9 @@
 # include <iostream>
 # include <exception>
 # include <list>
-
-# define ListPair std::list<CPair<Type> *>
+# include <vector>
+# define ListTypePair std::list<CPair<Type> *>
+# define ListType std::list<Type>
 
 //container a utiliser liste?
 
@@ -118,31 +119,66 @@ class CPair {
 
 //if the list is of size 1, return it. if not, pair the elements and
 template <typename Type>
-ListPair	mergeInsert(ListPair current)
+ListTypePair	mergeInsert(ListTypePair current)
 {
-	typename	ListPair::iterator	it;
-	typename	ListPair::iterator	leftover = 0;
-	typename	ListPair			nextList;
+	typename	ListTypePair			sortedPairs;
+	typename	ListTypePair			finalList;
+	bool								hasLeftOver = false;
 
-
-	std::cout << current << std::endl;
+	// for (typename ListTypePair::iterator itD = current.begin(); itD != current.end(); itD++)
+	// {
+	// 	CPair<Type>::displayPair(**itD);
+	// 	std::cout << " ";
+	// }
+	// std::cout << "\n";
 	// Creating the sorted pairs list
-	it = current.begin();
-	if (it == current.end())
-		return (*it);
-	for (; it != current.end(); it += 2)
-	{
-		if (it + 1 == current.end())
-		{
-			leftover = it;
-			break ;
-		}
-		CPair<Type>	*pair = new CPair<Type>(*it, *(it + 1));
-		pair->sort();
-		nextList.push_back(pair);
-	}
-	mergeInsert(nextList);
+	if (current.size() == 1)
+		return (current);
+	sortedPairs = pairsPairs(nextList, hasLeftOver);
 	
+	finalList = mergeInsert(sortedPairs);
+	Array<std::list<CPair*>::iterator, nextList.size()> 
+	return (nextList);
 }
 
+template <typename Type>
+ListTypePair	pairsPairs(ListTypePair pairs, bool &hasLeftover)
+{
+	typename	ListTypePair::iterator	it;
+	typename	ListTypePair			sortedPairs;
+
+	for (; it != pairs.end(); std::advance(it, 2))
+	{
+		if (::next(it) == pairs.end())
+		{
+			hasLeftover = true;
+			break;
+		}
+		CPair<Type>	*pair = new CPair<Type>(*it, *::next(it));
+		pair->sort();
+		sortedPairs.push_back(pair);
+	}
+	return (sortedPairs);
+
+}
+
+// template <typename Type>
+// ListTypePair	insert(ListTypePair sortedList, CPair pair)
+// {
+
+// }
+
+template<class Iterator>
+Iterator	next(Iterator it, int n = 1)
+{
+	std::advance(it, n);
+	return (it);
+}
+int	jacob (unsigned int rank)
+{
+	int	value = 1 << rank;
+
+	value -= ((rank % 2) + 1)/2 *-1;
+	return (value / 3);
+}
 #endif
