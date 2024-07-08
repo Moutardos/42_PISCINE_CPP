@@ -8,6 +8,21 @@
 # define ListTypePair std::list<CPair<Type> *>
 # define ListType std::list<Type>
 
+// JacobSthal for rank
+int	jacob(unsigned int rank)
+{
+	int	value = 1 << rank;
+	value -= ((rank % 2) + 1)/2 * -1;
+	return (value / 3);
+}
+
+template<class Iterator>
+Iterator	next(Iterator it, int n = 1)
+{
+	std::advance(it, n);
+	return (it);
+}
+
 //container a utiliser liste?
 
 
@@ -117,6 +132,18 @@ class CPair {
 
 };
 
+template<typename Type>
+void	displayListPair(ListTypePair list)
+{
+	std::cout << "[";
+	for (typename	ListTypePair::iterator it = list.begin(); it != list.end(); it++)
+	{
+		CPair<Type>::displayPair(**it);
+		if (::next(it) != list.end())
+		std::cout << ", ";
+	}
+	std::cout << "]\n";
+}
 //if the list is of size 1, return it. if not, pair the elements and
 template <typename Type>
 ListTypePair	mergeInsert(ListTypePair current)
@@ -125,29 +152,63 @@ ListTypePair	mergeInsert(ListTypePair current)
 	typename	ListTypePair			finalList;
 	bool								hasLeftOver = false;
 
-	// for (typename ListTypePair::iterator itD = current.begin(); itD != current.end(); itD++)
-	// {
-	// 	CPair<Type>::displayPair(**itD);
-	// 	std::cout << " ";
-	// }
-	// std::cout << "\n";
+	std::cout << " |Entering MergeInsert|" << std::endl;
 	// Creating the sorted pairs list
 	if (current.size() == 1)
+	{
+		std::cout << "|Exiting MergeInsert, list is size 1|" << std::endl;
 		return (current);
-	sortedPairs = pairsPairs(nextList, hasLeftOver);
-	
+	}
+	sortedPairs = pairsPairs(current, hasLeftOver);
+	displayListPair(sortedPairs);
 	finalList = mergeInsert(sortedPairs);
-	Array<std::list<CPair*>::iterator, nextList.size()> 
-	return (nextList);
+
+	std::cout << "  |Now inserting|" << std::endl;
+	std::list<typename ListTypePair::iterator>	toTreat;
+	typename ListTypePair::iterator	begin = finalList.begin();
+	int	n = 1;
+	while (begin != finalList.end())
+	{
+		int	diff = jacob(n + 1) - jacob(n);
+		std::cout << "diff :" << diff << std::endl;
+		if (static_cast<size_t>(std::distance(finalList.begin(), begin) + diff) > finalList.size())
+		{
+			diff = static_cast<size_t>(std::distance(finalList.end(), begin));
+			std::cout << "too much !!!  diff now : " << diff << std::endl;
+			begin = finalList.end();
+		}
+		else
+			std::advance(begin, diff);
+		typename ListTypePair::iterator	it = begin;
+		for (int i = 0; i < diff; i++)
+		{
+			toTreat.push_back(it);
+			std::advance(it, -1);
+		}
+	/*
+		1 1 3 5
+		-> 
+		1 - 1 = 0 -> 0->0
+		3 - 1 = 2 -> 2->1
+		5 - 3 = 2 -> 4->3
+		11 - 5 = 6 -> 10->5
+		0,2,1,4,3,10,9,8,7,6,5
+	*/	n++;
+	}
+	// for (typename std::list<typename ListTypePair::iterator>::iterator it = toTreat.begin(); it != toTreat.end(); it++)
+	// {
+	// 	CPair<Type>::displayPair(***it);
+	// }
+	std::cout << "|Exiting MergeInsert|" << std::endl;
+	return (sortedPairs);
 }
 
 template <typename Type>
 ListTypePair	pairsPairs(ListTypePair pairs, bool &hasLeftover)
 {
-	typename	ListTypePair::iterator	it;
 	typename	ListTypePair			sortedPairs;
 
-	for (; it != pairs.end(); std::advance(it, 2))
+	for (typename	ListTypePair::iterator	it = pairs.begin(); it != pairs.end(); std::advance(it, 2))
 	{
 		if (::next(it) == pairs.end())
 		{
@@ -168,17 +229,6 @@ ListTypePair	pairsPairs(ListTypePair pairs, bool &hasLeftover)
 
 // }
 
-template<class Iterator>
-Iterator	next(Iterator it, int n = 1)
-{
-	std::advance(it, n);
-	return (it);
-}
-int	jacob (unsigned int rank)
-{
-	int	value = 1 << rank;
 
-	value -= ((rank % 2) + 1)/2 *-1;
-	return (value / 3);
-}
+
 #endif

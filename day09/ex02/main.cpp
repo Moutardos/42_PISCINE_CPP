@@ -94,10 +94,9 @@ int main(void)
 					test.push_back(&nodeF);
 						test.push_back(&nodeG);
 							test.push_back(&nodeH);
+
 	mergeInsert(test);
-
-	std::cout << jacob(7) << std::endl;
-
+	
 
 	
 	return 0;
