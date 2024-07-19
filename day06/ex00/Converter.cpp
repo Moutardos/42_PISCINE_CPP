@@ -17,7 +17,7 @@ void	Converter::convertChar(std::string str, valueData &values) {
 
 bool	Converter::isInt(std::string str) {
 
-	int64_t	raw;
+	double	raw;
 
 	for (std::string::iterator it = str.begin(); it != str.end(); it++)
 	{
@@ -53,7 +53,7 @@ bool	Converter::isFloat	(std::string str) {
 		return (true);
 	for (std::string::iterator it = str.begin(); it != str.end(); it++)
 	{
-		if (it == std::prev(str.end()) && *it == 'f')
+		if ((it == (str.end() - 1)) && *it == 'f')
 		{
 			;
 		}
@@ -68,7 +68,7 @@ bool	Converter::isFloat	(std::string str) {
 		}
 	}
 	std::stringstream(str) >> raw;
-	if (raw > std::numeric_limits<float>::max() || raw < std::numeric_limits<float>::min())
+	if (raw > std::numeric_limits<float>::max() || raw < -std::numeric_limits<float>::max())
 		return (false);
 	return (true);
 }
@@ -109,7 +109,7 @@ bool	Converter::isDouble	(std::string str) {
 		}
 	}
 	std::stringstream(str) >> raw;
-	if (raw > std::numeric_limits<double>::max() || raw < std::numeric_limits<double>::min())
+	if (raw > std::numeric_limits<double>::max() || raw < -std::numeric_limits<double>::max())
 		return (false);
 	return (true);
 }

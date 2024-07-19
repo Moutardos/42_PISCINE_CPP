@@ -4,7 +4,7 @@
 # include <iostream>
 # include <iomanip>
 # include <limits>
-
+# include <stdint.h>
 struct Data
 {
 	void *thing;

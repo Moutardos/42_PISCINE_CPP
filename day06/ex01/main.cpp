@@ -8,7 +8,7 @@ int	main(void)
 	uintptr_t	ptr;
 	std::string	message;
 
-	message =  "i love u\n";
+	message =  "bonsoir paris\n";
 	data.thing = reinterpret_cast<void *>(&message);
 	std::cout << "Message stocked in data.thing" << std::endl;
 	std::cout << *reinterpret_cast<std::string *>(data.thing);

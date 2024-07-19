@@ -1,7 +1,7 @@
 CPP = c++
 ODIR = obj
 CONTACT_MAX = 8
-CPP_FLAGS = -Wall -Wextra -Werror
+CPP_FLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = convert
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
 CPP_FILES = ScalarConverter main Converter

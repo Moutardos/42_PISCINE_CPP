@@ -4,6 +4,8 @@
 # include <iostream>
 # include <iomanip>
 # include <limits>
+# include <sstream>
+# include <stdlib.h>
 
 struct valueData{
 	char	value_char;

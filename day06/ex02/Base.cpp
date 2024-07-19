@@ -3,7 +3,7 @@
 #include "B.hpp"
 #include "C.hpp"
 
-#include "random"
+#include <stdlib.h>
 #include <ctime>
 #include <iostream>
 
