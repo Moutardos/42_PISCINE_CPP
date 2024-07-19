@@ -19,7 +19,8 @@ int main(void)
 	}
 
 	std::cout << std::endl;
-
+	
+	fred.decrement();
 	std::cout << fred << std::endl;
 	// fred.increment();
 
@@ -33,7 +34,7 @@ int main(void)
 		}
 		catch (std::exception &e)
 		{
-			std::cout << "There's an error ! :" << std::endl;
+			std::cout << "There's an error !" << std::endl;
 			std::cout << e.what() << std::endl;
 		}
 	}

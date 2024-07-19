@@ -3,7 +3,7 @@ ODIR = obj
 CPP_FLAGS = -Wall -Wextra -Werror  -std=c++98
 NAME = a.out
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
-CPP_FILES = main Bureaucrat AForm RobotomyRequestForm PresidentialPardonForm ShrubberyCreationForm 
+CPP_FILES = main Intern Bureaucrat AForm RobotomyRequestForm PresidentialPardonForm ShrubberyCreationForm 
 
 all : $(NAME)
 
