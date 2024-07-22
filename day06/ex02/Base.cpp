@@ -35,19 +35,33 @@ void identify(Base *p) {
 	else if (dynamic_cast<B *>(p) != NULL)
 		std::cout << "pointer is of type B!" << std::endl;
 	else if (dynamic_cast<C *>(p) != NULL)
-		std::cout << "pointer is of type C !" << std::endl;
+		std::cout << "pointer is of type C!" << std::endl;
 	else
 		std::cout << "couldn't convert pointer to any type" << std::endl;
 }
 
 void identify(Base &p) {
 
-	if (dynamic_cast<A *>(&p) != NULL)
-		std::cout << "pointer is of type A!" << std::endl;
-	else if (dynamic_cast<B *>(&p) != NULL)
-		std::cout << "pointer is of type B!" << std::endl;
-	else if (dynamic_cast<C *>(&p) != NULL)
-		std::cout << "pointer is of type C !" << std::endl;
-	else
-		std::cout << "couldn't convert pointer to any type" << std::endl;
+	try
+	{
+		(void) dynamic_cast<A &>(p);
+		std::cout << "reference is of type A!" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}
+	try
+	{
+		(void) dynamic_cast<B &>(p);
+		std::cout << "reference is of type B!" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}
+	try
+	{
+		(void) dynamic_cast<C &>(p);
+		std::cout << "reference is of type C!" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e) {}	
+	std::cout << "couldn't convert pointer to any type" << std::endl;
 }
