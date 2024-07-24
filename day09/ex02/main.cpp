@@ -24,14 +24,17 @@ int main(void)
 	CPair<int>	nodeF(f);
 	CPair<int>	nodeG(g);
 	CPair<int>	nodeH(h);
-	CPair<int>	nodeAB(&nodeA, &nodeB);
-	CPair<int>	nodeEF(&nodeE, &nodeF);
-	CPair<int>	nodeCD(&nodeC, &nodeD);
-	CPair<int>	nodeGH(&nodeG, &nodeH);
-	CPair<int>	nodeABCD(&nodeAB, &nodeCD);
-	CPair<int>	nodeEFGH(&nodeEF, &nodeGH);
-	CPair<int>	base(&nodeABCD, &nodeEFGH);
 
+	// CPair<int>	nodeAB(&nodeA, &nodeB);
+	// CPair<int>	nodeEF(&nodeE, &nodeF);
+	// CPair<int>	nodeCD(&nodeC, &nodeD);
+	// CPair<int>	nodeGH(&nodeG, &nodeH);
+	// CPair<int>	nodeABCD(&nodeAB, &nodeCD);
+	// CPair<int>	nodeEFGH(&nodeEF, &nodeGH);
+	// CPair<int>	base(&nodeABCD, &nodeEFGH);
+	
+	// [1,5,4,5,6,7];
+	// Cpair(1), Cpair(5), CPair(4)
 	// std::cout << "[30, 10, 20, 50, 40, 1, 89, 7]" << std::endl;
 	// std::cout << "\n\n";
 	// std::cout << "[";
@@ -95,9 +98,9 @@ int main(void)
 						test.push_back(&nodeG);
 							test.push_back(&nodeH);
 
+
 	mergeInsert(test);
 	
-
-	
+	std::cout << std::endl << "Number of comparaison is " <<  global_ << " !" << std::endl;
 	return 0;
 }

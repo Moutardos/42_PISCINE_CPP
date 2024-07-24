@@ -1,6 +1,6 @@
 CPP = c++
 ODIR = obj
-CPP_FLAGS = -Wall -Wextra -Werror
+CPP_FLAGS = -Wall -Wextra
 NAME = FordJohnson
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
 CPP_FILES = main
