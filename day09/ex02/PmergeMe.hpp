@@ -6,9 +6,11 @@
 # include <exception>
 # include <list>
 # include <vector>
-# define ListTypePair std::list<CPair<Type> *>
+# include <memory>
 
-int global_ = 0;
+# define ContainerCPair Container<CPair<Type> *, Allocator>
+
+int compCount = 0;
 // JacobSthal for rank
 int	jacob(unsigned int rank)
 {
@@ -89,7 +91,7 @@ class CPair {
 		{
 			try
 			{
-				global_++;
+				compCount++;
 				// std::cout << "\ncomp: " << **this << " < " << *b; 
 				return(**this <*b);
 			}
@@ -140,11 +142,13 @@ class CPair {
 
 };
 
-template<typename Type>
-void	displayListPair(ListTypePair list)
+template	<template <typename, typename> class Container,
+			 typename Type,
+         	 typename Allocator=std::allocator<CPair<Type> *> >
+void	displayListPair(ContainerCPair list)
 {
 	std::cout << "[";
-	for (typename	ListTypePair::iterator it = list.begin(); it != list.end(); it++)
+	for (typename	ContainerCPair::iterator it = list.begin(); it != list.end(); it++)
 	{
 		CPair<Type>::displayPair(**it);
 		if (::next(it) != list.end())
@@ -158,18 +162,20 @@ bool	compPair(CPair<Type> *pair1, CPair<Type> *pair2)
 {
 	return (*pair1 < *pair2);
 }
-template<typename Type>
-ListTypePair	insert(ListTypePair upperMain, CPair<Type> *leftover = NULL)
+template	<template <typename, typename> class Container,
+			 typename Type,
+         	 typename Allocator=std::allocator<CPair<Type> *> >
+ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 {
-	typename ListTypePair			main;
-	typename ListTypePair::iterator	itStart = upperMain.begin();
+	ContainerCPair			main;
+	typename ContainerCPair::iterator	itStart = upperMain.begin();
 	CPair<Type>						*toInsert;
-	typename ListTypePair::iterator	itRestart;
+	typename ContainerCPair::iterator	itRestart;
 	bool							stop = false;
 
 	int	n = 2;
 
-	for (typename std::list<CPair<Type> *>::iterator it = upperMain.begin(); it != upperMain.end(); it++)
+	for (typename ContainerCPair::iterator it = upperMain.begin(); it != upperMain.end(); it++)
 		main.push_back((*(*it))[0]);
 	if (leftover)
 	{
@@ -195,7 +201,7 @@ ListTypePair	insert(ListTypePair upperMain, CPair<Type> *leftover = NULL)
 			itRestart = itStart;
 			for (; diff > 0; diff--)
 			{
-				typename ListTypePair::iterator itStop = main.begin();
+				typename ContainerCPair::iterator itStop = main.begin();
 
 				while (itStop != main.end() && (*(*itStart))[0] != *itStop)
 				{
@@ -230,15 +236,18 @@ ListTypePair	insert(ListTypePair upperMain, CPair<Type> *leftover = NULL)
 	return (main);
 }
 //if the list is of size 1, return it. if not, pair the elements and
-template <typename Type>
-ListTypePair	mergeInsert(ListTypePair current)
+template	<template <typename, typename> class Container,
+			 typename Type,
+         	 typename Allocator=std::allocator<CPair<Type> *> >
+ContainerCPair	mergeInsert(ContainerCPair current)
 {
-	typename	ListTypePair			sortedPairs;
-	typename	ListTypePair			main;
+	ContainerCPair			sortedPairs;
+	ContainerCPair			main;
 	bool								hasLeftOver = false;
 	CPair<Type>							*leftover = NULL;
 
 	std::cout << " |Entering MergeInsert|" << std::endl;
+	displayListPair(current);
 	// Creating the sorted pairs list
 	if (current.size() == 1)
 	{
@@ -247,12 +256,7 @@ ListTypePair	mergeInsert(ListTypePair current)
 	}
 	sortedPairs = pairsPairs(current, hasLeftOver);
 	if (hasLeftOver)
-	{
 		leftover =  *(::next(current.end(), -1));
-		std::cout << "leftover is : ";
-		CPair<Type>::displayPair(*leftover);
-	}
-	displayListPair(sortedPairs);
 	sortedPairs = mergeInsert(sortedPairs);
 	std::cout << "  |Now inserting|" << std::endl;
 
@@ -273,12 +277,14 @@ ListTypePair	mergeInsert(ListTypePair current)
 	return (main);
 }
 
-template <typename Type>
-ListTypePair	pairsPairs(ListTypePair pairs, bool &hasLeftover)
+template	<template <typename, typename> class Container,
+			 typename Type,
+         	 typename Allocator=std::allocator<CPair<Type> *> >
+ContainerCPair	pairsPairs(ContainerCPair pairs, bool &hasLeftover)
 {
-	typename	ListTypePair			sortedPairs;
+	ContainerCPair	sortedPairs;
 
-	for (typename	ListTypePair::iterator	it = pairs.begin(); it != pairs.end(); std::advance(it, 2))
+	for (typename	ContainerCPair::iterator	it = pairs.begin(); it != pairs.end(); std::advance(it, 2))
 	{
 		if (::next(it) == pairs.end())
 		{
@@ -292,6 +298,21 @@ ListTypePair	pairsPairs(ListTypePair pairs, bool &hasLeftover)
 	return (sortedPairs);
 }
 
+template	<template <typename, typename> class Container,
+			 typename Type,
+         	 typename Allocator=std::allocator<CPair<Type> *> > 
+void	mergeInsertSort(std::list<int> list)
+{
+	ContainerCPair	pairContenair;
+
+	compCount = 0;
+
+	for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
+	{
+		pairContenair.push_back(new CPair<Type>(*it));
+	}
+	mergeInsert<Container, Type>(pairContenair);
+}
 
 // template <typename Type>
 // ListTypePair	insert(ListTypePair sortedList, CPair pair)

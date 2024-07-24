@@ -1,106 +1,48 @@
 #include "PmergeMe.hpp"
-# include <list>
+#include <list>
+#include <deque>
+#include <ctime>
 
-
-
-
-
-int main(void)
+std::list<int>	convertList(char **av)
 {
-	int	a = 30;
-	int	b = 10;
-	int	c = 20;
-	int	d = 50;
-	int e = 40;
-	int f = 1;
-	int g = 89;
-	int h = 7;
+	std::list<int>	results;
 
-	CPair<int>	nodeA(a);
-	CPair<int>	nodeC(c);
-	CPair<int>	nodeB(b);
-	CPair<int>	nodeD(d);
-	CPair<int>	nodeE(e);
-	CPair<int>	nodeF(f);
-	CPair<int>	nodeG(g);
-	CPair<int>	nodeH(h);
+	av++;
+	for (; *av != NULL; av++)
+	{
+		results.push_back(stoi(std::string(*av)));
+	}
+	return (results);
+}
 
-	// CPair<int>	nodeAB(&nodeA, &nodeB);
-	// CPair<int>	nodeEF(&nodeE, &nodeF);
-	// CPair<int>	nodeCD(&nodeC, &nodeD);
-	// CPair<int>	nodeGH(&nodeG, &nodeH);
-	// CPair<int>	nodeABCD(&nodeAB, &nodeCD);
-	// CPair<int>	nodeEFGH(&nodeEF, &nodeGH);
-	// CPair<int>	base(&nodeABCD, &nodeEFGH);
-	
-	// [1,5,4,5,6,7];
-	// Cpair(1), Cpair(5), CPair(4)
-	// std::cout << "[30, 10, 20, 50, 40, 1, 89, 7]" << std::endl;
-	// std::cout << "\n\n";
-	// std::cout << "[";
-	// CPair<int>::displayPair(nodeAB);
-	// std::cout << ", ";
-	// CPair<int>::displayPair(nodeCD);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeEF);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeGH);
-	// std::cout << "]\n";
-	// std::cout << "->\n";
-	// nodeAB.sort();
-	// nodeCD.sort();
-	// nodeEF.sort();
-	// nodeGH.sort();
-	// std::cout << "[";
-	// CPair<int>::displayPair(nodeAB);
-	// std::cout << ", ";
-	// CPair<int>::displayPair(nodeCD);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeEF);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeGH);
-	// std::cout << "]\n\n";
+int main(int ac, char **av)
+{
+	(void) ac;
 
-	// std::cout << "->\n";
-	// std::cout << "[";
-	// CPair<int>::displayPair(nodeABCD);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeEFGH);
-	// std::cout << "]\n";
-	// nodeABCD.sort();
-	// nodeEFGH.sort();
-	// std::cout << "->\n";
-	// std::cout << "[";
-	// CPair<int>::displayPair(nodeABCD);
-	// std::cout << ",";
-	// CPair<int>::displayPair(nodeEFGH);
-	// std::cout << "]\n";
-	// std::cout << "\n";
-	// std::cout << "[";
-	// CPair<int>::displayPair(base);
-	// std::cout << "]\n";
-	// base.sort();
-	// std::cout << "->\n";
-	// std::cout << "[";
-	// CPair<int>::displayPair(base);
-	// std::cout << "]\n";
+	std::list<int>	userInput;
 
-	std::list<CPair<int>* > test;
+	try
+	{
+		userInput = convertList(av);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << "pas sur" << '\n';
+		return (1);
+	}
+	std::time_t start = std::clock();
+	mergeInsertSort<std::list, int>(userInput);
+	std::time_t	timeList = std::clock() - start;
 
-	
+	std::cout << std::endl << "Number of comparaison for list is " << compCount << " !" << std::endl;
+	std::cout << "Time to proceed " << userInput.size() << " elements with list is : " << 1000.0 * (start - timeList) / CLOCKS_PER_SEC << " ms" << std::endl;
+	std::cout << std::endl;
 
-	test.push_back(&nodeA);
-	test.push_back(&nodeB);
-		test.push_back(&nodeC);
-			test.push_back(&nodeD);
-				test.push_back(&nodeE);
-					test.push_back(&nodeF);
-						test.push_back(&nodeG);
-							test.push_back(&nodeH);
+	start = std::clock();
+	mergeInsertSort<std::deque, int>(userInput);
+	std::time_t	timeDeque = std::clock() - start;
+	std::cout << std::endl << "Number of comparaison for deque is " << compCount << " !" << std::endl;
+	std::cout << "Time to proceed " << userInput.size() << " elements with deque is : " << 1000.0 * (start - timeDeque) / CLOCKS_PER_SEC << " ms" << std::endl;
 
-
-	mergeInsert(test);
-	
-	std::cout << std::endl << "Number of comparaison is " <<  global_ << " !" << std::endl;
-	return 0;
+	return (0);
 }
