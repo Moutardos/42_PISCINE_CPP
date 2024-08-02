@@ -1,9 +1,17 @@
 CPP = c++
 ODIR = obj
-CPP_FLAGS = -Wall -Wextra
+CPP_FLAGS = -Wall -Wextra -Werror -g3
 NAME = FordJohnson
+NAMED = FordJohnson_debug
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
 CPP_FILES = main
+
+DEBUG ?= 0
+
+ifeq ($(DEBUG),1)
+	CPP_FLAGS += -DDEBUG=1
+	NAME = $(NAMED)
+endif
 
 all : $(NAME)
 
@@ -21,5 +29,9 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(NAMED)
 
 re: fclean $(NAME)
+
+debug: clean
+	make DEBUG=1

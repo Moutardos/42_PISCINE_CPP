@@ -10,6 +10,20 @@
 
 # define ContainerCPair Container<CPair<Type> *, Allocator>
 
+# ifndef DEBUG
+
+#  define LOG_DEBUG(s)
+#  define LOG_DEBUGN(s)
+
+# else
+#  define LOG_DEBUG(s) do { \
+	std::cerr << s; \
+} while (0) \
+
+#  define LOG_DEBUGN(s) LOG_DEBUG(s << std::endl)
+
+# endif
+
 int compCount = 0;
 // JacobSthal for rank
 int	jacob(unsigned int rank)
@@ -65,18 +79,29 @@ class CPair {
 			(void) other;
 	
 		}
-		CPair	*operator[](bool pos)
+		CPair	*operator[](bool pos) 
 		{
 			
-			if (pos == 0 && _size > 0)
+			if (pos == 0 && this->_size > 0)
 				return (static_cast<CPair<Type>*>(this->_left));
-			if (pos == 1 && _size > 1)
+			if (pos == 1 && this->_size > 1)
 				return (static_cast<CPair<Type>*>(this->_right));
 			return (NULL);
 		}
-		Type	&operator*(void)
+
+		const CPair	*operator[](bool pos) const
 		{
-			CPair	*curr;
+			
+			if (pos == 0 && this->_size > 0)
+				return (static_cast<CPair<Type>*>(this->_left));
+			if (pos == 1 && this->_size > 1)
+				return (static_cast<CPair<Type>*>(this->_right));
+			return (NULL);
+		}
+
+		Type	&operator*(void) const
+		{
+			const CPair	*curr;
 
 			curr = this;
 			while (curr && curr->_size > 1)
@@ -87,12 +112,13 @@ class CPair {
 				throw std::logic_error("Can't access to left member, it's NULL");
 			return (*static_cast<int*>(curr->_left));
 		}
+
 		bool	operator<(CPair& b)
 		{
 			try
 			{
 				compCount++;
-				// std::cout << "\ncomp: " << **this << " < " << *b; 
+				LOG_DEBUGN("comp: " << **this << " < " << *b); 
 				return(**this <*b);
 			}
 			catch(const std::exception& e)
@@ -119,22 +145,7 @@ class CPair {
 			this->_size -= static_cast<CPair<Type>*>(this->_right)->getSize();
 			this->_right = NULL;
 		}
-		static void	displayPair(CPair &pair) {
 
-			if (pair.getSize() >= 2)
-			{
-				std::cout << "(";
-				displayPair(*pair[0]);
-			}
-			else if (pair.getSize()== 1)
-				std::cout << *pair;
-			if (pair.getSize() >= 2)
-			{
-				std::cout << ",";
-				displayPair(*pair[1]);
-				std::cout << ")";
-			}
-		}
 	private:
 		void	*_left;
 		void	*_right;
@@ -142,19 +153,38 @@ class CPair {
 
 };
 
+template <typename Type>
+std::ostream	&operator<< (std::ostream &os, const CPair<Type> &pair)
+{
+	if (pair.getSize() >= 2)
+	{
+		os << "(";
+		os << (*pair[0]);
+	}
+	else if (pair.getSize()== 1)
+		os << *pair;
+	if (pair.getSize() >= 2)
+	{
+		os << ",";
+		os << (*pair[1]);
+		os << ")";
+	}
+	return (os);
+}	
+
 template	<template <typename, typename> class Container,
 			 typename Type,
          	 typename Allocator=std::allocator<CPair<Type> *> >
 void	displayListPair(ContainerCPair list)
 {
-	std::cout << "[";
+	LOG_DEBUG("[");
 	for (typename	ContainerCPair::iterator it = list.begin(); it != list.end(); it++)
 	{
-		CPair<Type>::displayPair(**it);
+		LOG_DEBUG(**it);
 		if (::next(it) != list.end())
-		std::cout << ", ";
+			LOG_DEBUG(", ");
 	}
-	std::cout << "]\n";
+	LOG_DEBUGN("]");
 }
 
 template <typename Type>
@@ -181,9 +211,8 @@ ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 	{
 		upperMain.push_back(leftover);
 	}
-	std::cout << "Main chain: ";
+	LOG_DEBUG("Main chain: ");
 	displayListPair(main); 
-	std::cout << std::endl;
 	main.push_front((*(*upperMain.begin()))[1]);
 	while (itStart != upperMain.end())
 	{
@@ -213,16 +242,15 @@ ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 				}
 				else
 					toInsert = (*(*itStart))[1];
-				std::cout << "inserting: ";
-				CPair<Type>::displayPair(*toInsert);
-				std::cout << " into ";
+				LOG_DEBUG("inserting: ");
+				LOG_DEBUG(*toInsert);
+				LOG_DEBUG(" into ");
 				displayListPair(main);
-				std::cout << " stopping at : ";
+				LOG_DEBUG(" stopping at : ");
 				if (itStop == main.end())
-					std::cout << "end of containers" << std::endl;
+					LOG_DEBUGN("end of containers");
 				else
-					CPair<Type>::displayPair(*(*itStop));
-				std::cout << std::endl;
+					LOG_DEBUGN(*itStop);
 				main.insert(std::upper_bound(main.begin(), itStop, toInsert, compPair<Type>),
 					toInsert);
 				std::advance(itStart, -1);
@@ -246,34 +274,27 @@ ContainerCPair	mergeInsert(ContainerCPair current)
 	bool								hasLeftOver = false;
 	CPair<Type>							*leftover = NULL;
 
-	std::cout << " |Entering MergeInsert|" << std::endl;
+	LOG_DEBUGN(" |Entering MergeInsert|");
 	displayListPair(current);
 	// Creating the sorted pairs list
 	if (current.size() == 1)
 	{
-		std::cout << "|Exiting MergeInsert, list is size 1|" << std::endl;
+		LOG_DEBUGN("|Exiting MergeInsert, list is size 1|");
 		return (current);
 	}
 	sortedPairs = pairsPairs(current, hasLeftOver);
 	if (hasLeftOver)
 		leftover =  *(::next(current.end(), -1));
 	sortedPairs = mergeInsert(sortedPairs);
-	std::cout << "  |Now inserting|" << std::endl;
+	LOG_DEBUGN("  |Now inserting|");
 
-	/*
-		1 1 3 5
-		-> 
-		1 - 1 = 0 -> 0->0
-		3 - 1 = 2 -> 2->1
-		5 - 3 = 2 -> 4->3
-		11 - 5 = 6 -> 10->5
-		0,2,1,4,3,10,9,8,7,6,5
-	*/
 	displayListPair(sortedPairs);
 	main = insert(sortedPairs, leftover);
-		std::cout << "after insert : ->\n";
+	LOG_DEBUGN("after insert : ->");
 	displayListPair(main);
-	std::cout << "|Exiting MergeInsert|" << std::endl;
+	for (typename ContainerCPair::iterator it = sortedPairs.begin(); it != sortedPairs.end(); it++)
+		delete *it;
+	LOG_DEBUGN("|Exiting MergeInsert|");
 	return (main);
 }
 
@@ -301,9 +322,21 @@ ContainerCPair	pairsPairs(ContainerCPair pairs, bool &hasLeftover)
 template	<template <typename, typename> class Container,
 			 typename Type,
          	 typename Allocator=std::allocator<CPair<Type> *> > 
-void	mergeInsertSort(std::list<int> list)
+void	mergeInsertSort(std::list<int> list, bool print=false)
 {
 	ContainerCPair	pairContenair;
+	ContainerCPair	main;
+	if (print)
+	{
+		std::cout << "Before: ";
+		for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
+		{
+			if (it != list.begin())
+				std::cout << " ";
+			std::cout << *it;
+		}
+		std::cout << std::endl;
+	}
 
 	compCount = 0;
 
@@ -311,15 +344,22 @@ void	mergeInsertSort(std::list<int> list)
 	{
 		pairContenair.push_back(new CPair<Type>(*it));
 	}
-	mergeInsert<Container, Type>(pairContenair);
+	main = mergeInsert<Container, Type>(pairContenair);
+	if (print)
+	{
+		std::cout << "After: ";
+		for (typename ContainerCPair::iterator it = main.begin(); it != main.end(); it++)
+		{
+			if (it != main.begin())
+				std::cout << " ";
+			std::cout << **it;
+		}
+		std::cout << std::endl;
+	}
+	for (typename ContainerCPair::iterator it = pairContenair.begin(); it != pairContenair.end(); it++)
+		delete *it;
+
 }
-
-// template <typename Type>
-// ListTypePair	insert(ListTypePair sortedList, CPair pair)
-// {
-
-// }
-
 
 
 
