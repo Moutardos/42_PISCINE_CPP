@@ -1,6 +1,7 @@
 CPP = c++
 ODIR = obj
-CPP_FLAGS = -Wall -Wextra -Werror -g3
+IDIR = include
+CPP_FLAGS = -Wall -Wextra -Werror -g3 -I$(IDIR)
 NAME = FordJohnson
 NAMED = FordJohnson_debug
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))

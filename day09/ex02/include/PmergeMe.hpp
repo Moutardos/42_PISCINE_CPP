@@ -8,21 +8,10 @@
 # include <vector>
 # include <memory>
 
+# include "logger.hpp"
+# include "color.hpp"
+
 # define ContainerCPair Container<CPair<Type> *, Allocator>
-
-# ifndef DEBUG
-
-#  define LOG_DEBUG(s)
-#  define LOG_DEBUGN(s)
-
-# else
-#  define LOG_DEBUG(s) do { \
-	std::cerr << s; \
-} while (0) \
-
-#  define LOG_DEBUGN(s) LOG_DEBUG(s << std::endl)
-
-# endif
 
 int compCount = 0;
 // JacobSthal for rank
@@ -39,9 +28,6 @@ Iterator	next(Iterator it, int n = 1)
 	std::advance(it, n);
 	return (it);
 }
-
-//container a utiliser liste?
-
 
 //	Cpair is a container-like class that contains in it's left or right member either another CPair
 //	or a value of type Type. the accesor * shall return the valun of the left most value (error if it's NULL)
@@ -118,7 +104,7 @@ class CPair {
 			try
 			{
 				compCount++;
-				LOG_DEBUGN("comp: " << **this << " < " << *b); 
+				LOG_CMP("comp between: " << **this << " and " << *b << std::endl); 
 				return(**this <*b);
 			}
 			catch(const std::exception& e)
@@ -175,7 +161,7 @@ std::ostream	&operator<< (std::ostream &os, const CPair<Type> &pair)
 template	<template <typename, typename> class Container,
 			 typename Type,
          	 typename Allocator=std::allocator<CPair<Type> *> >
-void	displayListPair(ContainerCPair list)
+void	displayListPair(ContainerCPair list, bool endl=true)
 {
 	LOG_DEBUG("[");
 	for (typename	ContainerCPair::iterator it = list.begin(); it != list.end(); it++)
@@ -184,7 +170,9 @@ void	displayListPair(ContainerCPair list)
 		if (::next(it) != list.end())
 			LOG_DEBUG(", ");
 	}
-	LOG_DEBUGN("]");
+	LOG_DEBUG("]");
+	if (endl)
+		LOG_DEBUG(std::endl);
 }
 
 template <typename Type>
@@ -212,8 +200,10 @@ ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 		upperMain.push_back(leftover);
 	}
 	LOG_DEBUG("Main chain: ");
-	displayListPair(main); 
+	displayListPair(main);
+	LOG_DEBUG("we insert the right element of the first pair at the beginning : ");
 	main.push_front((*(*upperMain.begin()))[1]);
+	displayListPair(main);
 	while (itStart != upperMain.end())
 	{
 		int	diff = jacob(n + 1) - jacob(n) ;
@@ -248,9 +238,9 @@ ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 				displayListPair(main);
 				LOG_DEBUG(" stopping at : ");
 				if (itStop == main.end())
-					LOG_DEBUGN("end of containers");
+					LOG_DEBUG("end of containers" << std::endl);
 				else
-					LOG_DEBUGN(*itStop);
+					LOG_DEBUG(**itStop << " because " << **itStart<< std::endl);
 				main.insert(std::upper_bound(main.begin(), itStop, toInsert, compPair<Type>),
 					toInsert);
 				std::advance(itStart, -1);
@@ -274,27 +264,30 @@ ContainerCPair	mergeInsert(ContainerCPair current)
 	bool								hasLeftOver = false;
 	CPair<Type>							*leftover = NULL;
 
-	LOG_DEBUGN(" |Entering MergeInsert|");
-	displayListPair(current);
+	LOG_DEBUG (" |Entering MergeInsert with ");
+	displayListPair(current, false);
+	LOG_DEBUG (" |" << std::endl);
 	// Creating the sorted pairs list
 	if (current.size() == 1)
 	{
-		LOG_DEBUGN("|Exiting MergeInsert, list is size 1|");
+		LOG_DEBUG("|Exiting MergeInsert, list is size 1|" << std::endl);
 		return (current);
 	}
 	sortedPairs = pairsPairs(current, hasLeftOver);
 	if (hasLeftOver)
 		leftover =  *(::next(current.end(), -1));
+	LOG_DEBUG("Paired list is now : ");
+	displayListPair(sortedPairs);
 	sortedPairs = mergeInsert(sortedPairs);
-	LOG_DEBUGN("  |Now inserting|");
+	LOG_DEBUG("  |Now inserting|" << std::endl);
 
 	displayListPair(sortedPairs);
 	main = insert(sortedPairs, leftover);
-	LOG_DEBUGN("after insert : ->");
+	LOG_DEBUG("after insert : ->" << std::endl);
 	displayListPair(main);
 	for (typename ContainerCPair::iterator it = sortedPairs.begin(); it != sortedPairs.end(); it++)
 		delete *it;
-	LOG_DEBUGN("|Exiting MergeInsert|");
+	LOG_DEBUG("|Exiting MergeInsert|" << std::endl);
 	return (main);
 }
 

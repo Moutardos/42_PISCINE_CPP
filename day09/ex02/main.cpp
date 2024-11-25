@@ -32,7 +32,8 @@ int main(int ac, char **av)
 		return (1);
 	}
 
-	mergeInsertSort<std::list, int>(userInput, true);
+	if (!DEBUG)
+		mergeInsertSort<std::list, int>(userInput, true);
 
 	std::time_t start = std::clock();
 	mergeInsertSort<std::list, int>(userInput);
