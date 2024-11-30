@@ -1,9 +1,10 @@
 CPP = c++
 ODIR = obj
-CPP_FLAGS = -Wall -Wextra -Werror -g3
+IDIR = include
+CPP_FLAGS = -Wall -Wextra -Werror --std=c++98 -g3 -I$(IDIR)
 NAME = btc
 OBJS = $(patsubst %,$(ODIR)/%,$(CPP_FILES:=.o))
-CPP_FILES = main BitcoinExchange.cpp
+CPP_FILES = main BitcoinExchange
 
 all : $(NAME)
 
