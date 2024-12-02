@@ -4,9 +4,9 @@
 /* Date */
 Date::Date(void) {
 
-	this->year = 0;
-	this->month = 0;
-	this->day = 0;
+	this->year = 1;
+	this->month = 1;
+	this->day = 1;
 }
 Date::Date(Date const &ref) 
 {
@@ -112,7 +112,7 @@ unsigned int	Date::getYear(void) const
 void	Date::setDay(std::string buffer)
 {
 	unsigned long tmp = strtoul(buffer.c_str(), NULL, 10);
-	if (tmp >= std::numeric_limits<unsigned int>::max() || tmp > 31)
+	if (tmp > 31 || tmp == 0)
 		throw std::invalid_argument("day cannot be " + buffer );
 	this->day = tmp;
 }
@@ -120,14 +120,14 @@ void	Date::setDay(std::string buffer)
 void	Date::setMonth(std::string buffer)
 {
 	unsigned long tmp = strtoul(buffer.c_str(), NULL, 10);
-	if (tmp >= std::numeric_limits<unsigned int>::max() || tmp > 12)
+	if (tmp > 12 || tmp == 0)
 		throw std::invalid_argument("month cannot be " + buffer );
 	this->month = tmp;
 }
 void	Date::setYear(std::string buffer)
 {
 	unsigned long tmp = strtoul(buffer.c_str(), NULL, 10);
-	if (tmp >= std::numeric_limits<unsigned int>::max())
+	if (tmp >= std::numeric_limits<unsigned int>::max() || tmp == 0)
 		throw std::invalid_argument("year cannot be " + buffer );
 	this->year = tmp;
 }
@@ -206,10 +206,10 @@ const std::map<Date, float>	&BitcoinExchange::getData(void) const
 	return (_data);
 }
 
-float	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
+void	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
 {
 	std::string			dateStr;
-	std::string			valueStr;
+	std::string			amountStr;
 	std::string			sep;
 	std::size_t			posEnd;
 	Date				date;
@@ -222,14 +222,20 @@ float	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
 
 	if (posEnd == std::string::npos)
 		throw std::invalid_argument(line + ": Couldn't find separator \"" + sep + "\"");
-	LOG_INFO(line);
 	dateStr = line.substr(0, posEnd);
-	valueStr = line.substr(posEnd + sep.length());
-	if (dateStr.empty() || valueStr.empty())
-		throw std::invalid_argument(line + ": Bad input => " + dateStr + " " + valueStr);
+	amountStr = line.substr(posEnd + sep.length());
+	if (dateStr.empty() || amountStr.empty())
+		throw std::invalid_argument(line + ": Bad input => " + dateStr + " " + amountStr);
 	try
 	{
 		date = Date(dateStr);
+		if (btcfile == BTC_STOCK)
+		{
+			std::map<Date, float>::iterator	nearestDateIt = _data.upper_bound(date);
+			if (nearestDateIt == _data.end())
+				std::advance(nearestDateIt, -1);
+			date = nearestDateIt->first;
+		}
 	}
 	catch(const std::exception& e)
 	{
@@ -237,33 +243,36 @@ float	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
 	}
 	if (btcfile == BTC_STOCK)
 	{
-		if (valueStr.find_first_not_of("0123456789") != std::string::npos)
-			throw std::invalid_argument(line + ": " + valueStr + " is not a correct value [Integer between 0-1000]");		
+		if (amountStr.find_first_not_of("0123456789") != std::string::npos)
+			throw std::invalid_argument(line + ": \"" + amountStr + "\" is not a correct amount [Integer between 0-1000]");		
 	}
 	else
-		if (valueStr.find_first_not_of("0123456789.") != std::string::npos || std::count(valueStr.begin(), valueStr.end(), '.') > 1)
-			throw std::invalid_argument(line + ": " + valueStr + " is not a correct value [Positive decimal]");		
+		if (amountStr.find_first_not_of("0123456789.") != std::string::npos || std::count(amountStr.begin(), amountStr.end(), '.') > 1)
+			throw std::invalid_argument(line + ": \"" + amountStr + "\" is not a correct amount [Positive decimal]");		
 
-	double	value = strtod (valueStr.c_str(), NULL);
-	if (value < 0)
-		throw std::invalid_argument(line + ": " + valueStr + " not a positive number");		
+	double	amount = strtod (amountStr.c_str(), NULL);
+	if (amount < 0)
+		throw std::invalid_argument(line + ": " + amountStr + " not a positive number");		
 	if (btcfile == BTC_STOCK)
 	{
-		if (value > 1000)
-			throw std::invalid_argument(line + ": " + valueStr + " too large a number");		
+		if (amount > 1000)
+			throw std::invalid_argument(line + ": " + amountStr + " too large a number");		
 	}
 	try
 	{
 		if (btcfile == BTC_DATABASE)
-			this->_data[date] =  value;
+			this->_data[date] =  amount;
 		else
-			return (_data.upper_bound(date)->second * value);
+		{
+			float value;
+			value = this->_data[date] * amount;
+			std::cout << dateStr << " => " << amount << " = " << value << std::endl;
+		}
 	}
 	catch(const std::invalid_argument& e)
 	{
 		throw std::invalid_argument(line + ": " + dateStr + ": " + e.what());		
 	}
-	return (0);
 }
 
 void	BitcoinExchange::displayStock(void)
@@ -292,7 +301,7 @@ void	BitcoinExchange::displayStock(void)
 			if (nearestDateIt == _data.end())
 				std::advance(nearestDateIt, -1);
 			double sum = nearestDateIt->second * amount;
-			std::cout << std::fixed << dateStr << " => " << amount << " = " << sum;
+			std::cout << std::setprecision(2)<< dateStr << " => " << amount << " = " << sum;
 		}
 		catch (std::invalid_argument e)
 		{
@@ -300,11 +309,5 @@ void	BitcoinExchange::displayStock(void)
 		}
 		std::cout << std::endl;
 	}
-	// LOG_INFO("bonsoir je suis la");
-	// for (std::map<Date, float>::iterator it = this->_data.begin(); it != this->_data.end(); it++)
-	// {
-	// 	LOG_INFO(it->first);
-	// 	LOG_INFO("bonsoir");
-	// }
 }
 

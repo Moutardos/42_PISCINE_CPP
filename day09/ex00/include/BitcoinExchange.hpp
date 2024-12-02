@@ -8,6 +8,7 @@
 # define BTC_STOCK false
 
 # include <map>
+# include <iomanip>
 # include <iostream>
 # include <stdexcept>
 # include <fstream>
@@ -56,7 +57,7 @@ class	BitcoinExchange
 		std::string				_filename;
 		
 		void	fillData(void);
-		float	treatLine(std::string line, t_btcfile btcfile);
+		void	treatLine(std::string line, t_btcfile btcfile);
 
 	public:
 		BitcoinExchange();
