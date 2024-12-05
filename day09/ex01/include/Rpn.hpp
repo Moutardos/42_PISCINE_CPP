@@ -5,17 +5,15 @@
 # include <stack>
 # include <exception>
 
-enum	e_operation
-{
-	OP_ADD, OP_SUB, OP_DIV, OP_MUL
-};
-
 class RPN
 {
 	private:
-		std::string _rawExpr;
+		std::string 	_rawExpr;
 		std::stack<int> _data;
 
+		int		popNumber(void);
+		int		popOperation(int left);
+		void	pushOperation(int left);
 		void	treatOperator(char c);
 
 	public:
@@ -24,8 +22,10 @@ class RPN
 		RPN	(std::string expr);
 		~RPN();
 
-		RPN			&operator=(RPN &ref);
-		std::string	getRaw(void);
+		RPN				&operator=(RPN &ref);
+		std::string		getRaw(void);
+		int				getResult();
+		std::stack<int>	getData();
 		
 };
 
