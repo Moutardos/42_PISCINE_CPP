@@ -194,6 +194,7 @@ BitcoinExchange::BitcoinExchange(std::string filename)
 BitcoinExchange::~BitcoinExchange()
 {
 	this->_fileStock.close();
+	this->_fileData.close();
 }
 
 const std::string	&BitcoinExchange::getFileName(void) const
