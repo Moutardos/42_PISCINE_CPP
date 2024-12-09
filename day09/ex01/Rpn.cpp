@@ -60,25 +60,6 @@ void	RPN::treatOperator(char c)
 			throw std::invalid_argument("TreatOperator: not a valid operator");
 	};
 }
-// int	RPN::popOperation(int left)
-// {
-// 	int			right;
-// 	e_operation	op;
-
-// 	if (_data.size() < 2)
-// 	{
-// 		throw std::out_of_range("doOperation: out_of_range");
-// 	}
-// 	right = popDigit();
-// 	if (_data.front() > 0)
-// 	{
-// 		left = popOperation(right);
-// 	}
-// 	op = static_cast<e_operation>(_data.front());
-// 	if (op >= 0)
-// 		throw std::invalid_argument("doOperation: expected an operator");
-// 	_data.pop();
-// }
 
 int	RPN::popNumber(void)
 {

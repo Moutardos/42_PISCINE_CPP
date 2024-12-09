@@ -20,6 +20,5 @@ int main(int argc, char const *argv[])
 		LOG_ERROR(e.what());
 		return (0);
 	}
-	
 	return (0);
 }

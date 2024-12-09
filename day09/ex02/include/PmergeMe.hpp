@@ -11,7 +11,7 @@
 # include "logger.hpp"
 # include "color.hpp"
 
-# define ContainerCPair Container<CPair<Type> *, Allocator>
+# define ContainerCPair Container<CPair<Type> *, std::allocator<CPair<Type> *> >
 
 int compCount = 0;
 // JacobSthal for rank
@@ -159,8 +159,7 @@ std::ostream	&operator<< (std::ostream &os, const CPair<Type> &pair)
 }	
 
 template	<template <typename, typename> class Container,
-			 typename Type,
-         	 typename Allocator=std::allocator<CPair<Type> *> >
+			 typename Type>
 void	displayListPair(ContainerCPair list, bool endl=true)
 {
 	LOG_DEBUG("[");
@@ -181,8 +180,7 @@ bool	compPair(CPair<Type> *pair1, CPair<Type> *pair2)
 	return (*pair1 < *pair2);
 }
 template	<template <typename, typename> class Container,
-			 typename Type,
-         	 typename Allocator=std::allocator<CPair<Type> *> >
+			 typename Type>
 ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 {
 	ContainerCPair			main;
@@ -255,8 +253,7 @@ ContainerCPair	insert(ContainerCPair upperMain, CPair<Type> *leftover = NULL)
 }
 //if the list is of size 1, return it. if not, pair the elements and
 template	<template <typename, typename> class Container,
-			 typename Type,
-         	 typename Allocator=std::allocator<CPair<Type> *> >
+			 typename Type>
 ContainerCPair	mergeInsert(ContainerCPair current)
 {
 	ContainerCPair			sortedPairs;
@@ -292,8 +289,7 @@ ContainerCPair	mergeInsert(ContainerCPair current)
 }
 
 template	<template <typename, typename> class Container,
-			 typename Type,
-         	 typename Allocator=std::allocator<CPair<Type> *> >
+			 typename Type>
 ContainerCPair	pairsPairs(ContainerCPair pairs, bool &hasLeftover)
 {
 	ContainerCPair	sortedPairs;
@@ -313,8 +309,7 @@ ContainerCPair	pairsPairs(ContainerCPair pairs, bool &hasLeftover)
 }
 
 template	<template <typename, typename> class Container,
-			 typename Type,
-         	 typename Allocator=std::allocator<CPair<Type> *> > 
+			 typename Type>
 void	mergeInsertSort(std::list<int> list, bool print=false)
 {
 	ContainerCPair	pairContenair;

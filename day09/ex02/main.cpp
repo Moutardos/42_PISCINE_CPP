@@ -2,15 +2,25 @@
 #include <list>
 #include <deque>
 #include <ctime>
+#include <limits>
 
 std::list<int>	convertList(char **av)
 {
 	std::list<int>	results;
+	long			raw;
 
 	av++;
 	for (; *av != NULL; av++)
 	{
-		results.push_back(stoi(std::string(*av)));
+		std::string rawString;
+		rawString = std::string(*av);
+		if (((!isdigit(rawString.at(0)) && rawString.at(0) != '-') || (rawString.at(0) == '-' &&  rawString.size() < 2))
+				|| rawString.find_first_not_of("0123456789",1) != std::string::npos)
+			throw std::invalid_argument(rawString +  " is not a valid number");
+		raw = atoi(*av);
+		if (raw >= std::numeric_limits<int>::max() || raw <= std::numeric_limits<int>::min())
+			throw std::invalid_argument(rawString + " is out of int limit");
+		results.push_back(atoi(*av));
 	}
 	return (results);
 }
@@ -28,7 +38,7 @@ int main(int ac, char **av)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << ": Couldn't convert string to int" << '\n';
+		LOG_ERROR(e.what() << ": Couldn't convert string to int" << std::endl);
 		return (1);
 	}
 
