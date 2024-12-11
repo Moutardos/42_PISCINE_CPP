@@ -242,15 +242,8 @@ void	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
 	{
 		throw std::invalid_argument(line + ": Incorrect date \"" + e.what() + "\"");
 	}
-	if (btcfile == BTC_STOCK)
-	{
-		if (amountStr.find_first_not_of("0123456789") != std::string::npos)
-			throw std::invalid_argument(line + ": \"" + amountStr + "\" is not a correct amount [Integer between 0-1000]");		
-	}
-	else
-		if (amountStr.find_first_not_of("0123456789.") != std::string::npos || std::count(amountStr.begin(), amountStr.end(), '.') > 1)
-			throw std::invalid_argument(line + ": \"" + amountStr + "\" is not a correct amount [Positive decimal]");		
-
+	if (amountStr.find_first_not_of("0123456789.") != std::string::npos || std::count(amountStr.begin(), amountStr.end(), '.') > 1)
+		throw std::invalid_argument(line + ": \"" + amountStr + "\" is not a correct amount [Positive decimal]");		
 	double	amount = strtod (amountStr.c_str(), NULL);
 	if (amount < 0)
 		throw std::invalid_argument(line + ": " + amountStr + " not a positive number");		
