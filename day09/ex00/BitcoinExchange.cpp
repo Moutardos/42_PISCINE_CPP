@@ -233,7 +233,7 @@ void	BitcoinExchange::treatLine(std::string line, t_btcfile btcfile)
 		if (btcfile == BTC_STOCK)
 		{
 			std::map<Date, float>::iterator	nearestDateIt = _data.upper_bound(date);
-			if (nearestDateIt == _data.end())
+			if (nearestDateIt == _data.end() && _data.size() > 0)
 				std::advance(nearestDateIt, -1);
 			date = nearestDateIt->first;
 		}
